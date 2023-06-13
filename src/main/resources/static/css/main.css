@@ -1,0 +1,123 @@
+* {
+    font-family: 'Poor Story', cursive;
+    box-sizing: border-box;
+    margin: 0;
+
+}
+
+body {
+    height: 3000px;
+}
+
+#main-menu {
+    position: sticky;
+    top: 0;
+}
+
+li {
+    float: left;
+}
+
+ul {
+    list-style: none;
+    overflow: hidden;
+}
+
+#main-menu li a {
+    /* 한줄에 표현하고도 블록요소 특징도 사용가능
+       블록요소로 지정해야 높이 너비 지정 가능 */
+    display: inline-block;
+    padding: 90px 40px;
+    text-align: center;
+    /* a태그에 적용된 밑줄 없애기 */
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+}
+
+#main-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #cccccc;
+}
+
+
+#user-menu {
+    position: fixed;
+    top: 0;
+    right: 70px;
+    background-color: #ffffff;
+}
+
+#user-menu li a {
+    display: inline-block;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 17px;
+
+}
+
+.logo-image {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+}
+
+#header {
+    text-align: left;
+    padding: 40px;
+    font-size: 60px;
+    position: relative;
+    left: 50px;
+    padding-top: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+    display: inline-block;
+}
+
+@media(max-width: 600px) {
+    #header {
+        width: 100%;
+    }
+
+    #main-menu {
+        width: 100%;
+        text-align: center;
+        /* main-menu을 가운데로 정렬 */
+    }
+
+    #main-menu li {
+        display: inline-block;
+        float: none;
+        padding: 0 10px;
+    }
+
+}
+#footer {
+    background-color: #ecedee;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#chatbot {
+    border: 1px solid rgb(0, 0, 0);
+    position: fixed;
+    text-align: center;
+    top: 200px;
+    right: 0;
+    width: 140px;
+    height: 140px;
+    background-size: cover;
+}
+

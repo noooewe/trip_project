@@ -1,5 +1,6 @@
 package com.portfolio.trip_project.entity;
 
+import com.portfolio.trip_project.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,7 +20,7 @@ public class MemberEntity {
     private Long id;
 
     @Column(length = 50, unique = true, nullable = false)
-    private String memberAccount;
+    private String memberUserName;
 
     @Column(length = 20, nullable = false)
     private String memberPassword;
@@ -29,6 +30,12 @@ public class MemberEntity {
 
     @Column(length = 10, nullable = false )
     private String memberGender;
+
+    @Column(length = 10, nullable = false)
+    private String memberCountryCode;
+
+    @Column(length = 10, nullable = false)
+    private String memberTelecom;
 
     @Column(length = 20, nullable = false)
     private String memberMobile;
@@ -51,18 +58,32 @@ public class MemberEntity {
     @Column(length = 20, nullable = false)
     private String memberDomain;
 
-    @Column
+    @Column(length = 20, nullable = false)
     private String memberHint;
 
     @Column(length = 30, unique = true, nullable = false)
     private String memberPassportNum;
 
+    public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberUserName(memberDTO.getMemberUserName());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberGender(memberDTO.getMemberGender());
+        memberEntity.setMemberCountryCode(memberDTO.getMemberCountryCode());
 
-    public LocalDate getBirthDate() {
-        return LocalDate.of(memberBirthYear, memberBirthMonth, memberBirthDay);
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setMemberBirthYear(memberDTO.getMemberBirthYear());
+        memberEntity.setMemberBirthMonth(memberDTO.getMemberBirthMonth());
+        memberEntity.setMemberBirthDay(memberDTO.getMemberBirthDay());
+        memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+        memberEntity.setMemberEmailFront(memberDTO.getMemberEmailFront());
+        memberEntity.setMemberDomain(memberDTO.getMemberDomain());
+        memberEntity.setMemberHint(memberDTO.getMemberHint());
+        memberEntity.setMemberPassportNum(memberDTO.getMemberPassportNum());
+        return memberEntity;
+
     }
 
-    public String getEmail() {
-        return memberEmailFront + "@" + memberDomain;
-    }
 }

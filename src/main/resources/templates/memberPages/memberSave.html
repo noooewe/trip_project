@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+</head>
+<body>
+<div class="container text-center mt-5">
+    <h1><strong> 회원가입 </strong></h1> <br>
+</div>
+<div id="save_form" class="container">
+    <form action="/member/save" name="loginForm" method="post">
+        <label for="member-userName">아이디</label>
+        <input type="text" id="member-userName" name="memberUserName" oninput="UserName_check()"
+               class="form-control mb-3">
+        <h6 id="User-result"></h6>
+        <label for="member-password">비밀번호</label>
+        <input type="password" id="member-password" name="memberPassword" oninput="password_check()"
+               class="form-control mb-3">
+        <i class="bi bi-key-fill" id="lock1"></i>
+        <h6 id="password-result"></h6>
+        <label for="member-PasswordConfirm">비밀번호 재확인</label>
+        <input type="password" id="member-PasswordConfirm" name="memberPassword" oninput="password_confirm()"
+               class="form-control mb-3">
+        <h6 id="passwordConfirm-result"></h6>
+        <label for="member-name">이름</label>
+        <div class="row g-2 align-items-center">
+            <div class="col-md-8 mb-3">
+                <input type="text" id="member-name" name="memberName" oninput="name_check()" class="form-control">
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="form-label mb-3">성별</div>
+                <div class="form-check form-check-inline mx-3 align-items-center" style="height: 100%;">
+                    <input class="form-check-input" type="radio" name="memberGender" id="gender-male" value="male" checked>
+                    <label class="form-check-label mb-2" for="gender-male">남자</label>
+                </div>
+                <div class="form-check form-check-inline mx-3 align-items-center" style="height: 100%;">
+                    <input class="form-check-input" type="radio" name="memberGender" id="gender-female" value="female">
+                    <label class="form-check-label mb-2" for="gender-female">여자</label>
+                </div>
+            </div>
+        </div>
+        <h6 id="name-result"></h6>
+        <div>휴대전화</div>
+        <select name="memberCountryCode" id="country_code" class="form-control mb-3" onchange="CountryCode_select()">
+                    <option value="">직접입력</option>
+
+                    <!-- 아시아 -->
+                    <optgroup label="Asia">
+                        <option value="+82" selected>대한민국 +82</option>
+                        <option value="+81">Japan +81</option>
+                        <option value="+63">Philippines +63</option>
+                        <option value="+66">Thailand +66</option>
+                        <option value="+84">Vietnam +84</option>
+                    </optgroup>
+
+                    <!-- 아프리카 -->
+                    <optgroup label="Africa">
+                        <option value="+212">Morocco +212</option>
+                    </optgroup>
+
+                    <!-- 유럽 -->
+                    <optgroup label="Europe">
+                        <option value="+33">France +33</option>
+                        <option value="+39">Italy +39</option>
+                        <option value="+49">Germany +49</option>
+                        <option value="+44">UK +44</option>
+                        <option value="+7">Russia +7</option>
+                        <option value="+39">Spain +39</option>
+            </optgroup>
+
+            <!-- 북미 -->
+            <optgroup label="North America">
+                <option value="+1">USA/Canada +1</option>
+            </optgroup>
+            <optgroup label="South America">
+                <option value="+52">Mexico +52</option>
+            </optgroup>
+
+        </select>
+        <div class="row g-2">
+            <div class="col-2">
+                <select name="memberTelecom" id="member-telecom" class="form-select mb-3">
+                    <option value="SKT">SKT</option>
+                    <option value="KT">KT</option>
+                    <option value="LG">LG U+</option>
+                    <option value="알뜰폰">알뜰폰</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <input type="tel" id="member-mobile" name="memberMobile" oninput="mobile_check()"
+                       class="form-control mb-3" placeholder="전화번호 입력">
+            </div>
+            <div class="col-4 d-grid">
+                <input type="button" class="btn btn-success btn-blook mb-3" value="인증번호 받기"
+                       onclick="numberMessage_chack()">
+            </div>
+        </div>
+        <h6 id="mobile-result"></h6>
+        <div class="row g-2">
+            <div class="col-5">
+                <input type="text" id="message-code" name="UsermessageCode" class="form-control mb-3">
+                <small id="verification-code-help" class="form-text text-muted">핸드폰으로 전송된 인증코드를 입력하세요.</small>
+            </div>
+            <div class="col-md-3">
+                <input type="button" id="member-message" name="memberMessage" class="btn btn-success mb-3"
+                       value="인증 확인" onclick="message_code()">
+            </div>
+            <h6 id="memberMassgeCode-result"></h6>
+        </div>
+        <label for="member-birthyear">생년월일</label>
+        <div class="row">
+            <div class="col">
+                <input type="text" id="member-birthyear" name="memberBirthYear" class="form-control mb-3"
+                       placeholder="년(4자)" oninput="birth_check()">
+            </div>
+            <div class="col">
+                <select name="memberBirthMonth" id="birthyear-Select" class="form-select mb-3"
+                        oninput="birth_check()">
+                    <option value="1">월</option>
+                    <option value="2"> 1월 </option>
+                    <option value="3"> 2월 </option>
+                    <option value="4"> 3월 </option>
+                    <option value="5"> 4월 </option>
+                    <option value="6"> 5월 </option>
+                    <option value="7"> 6월 </option>
+                    <option value="8"> 7월 </option>
+                    <option value="9"> 8월 </option>
+                    <option value="10"> 9월 </option>
+                    <option value="11"> 10월 </option>
+                    <option value="12"> 11월 </option>
+                    <option value="13"> 12월 </option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="text" id="birth-day" name="memberBirthDay" class="form-control" placeholder="일"
+                       oninput="birth_check()">
+            </div>
+            <h6 id="birth-result"></h6>
+            <div>주소 입력</div>
+            <div class="row g-2">
+                <div class="col-8">
+                    <input type="text" id="member-postcode" name="memberPostcode" placeholder="우편번호"
+                           class="form-control mb-3" oninput="postcode_check()">
+                </div>
+                <div class="col-4 d-grid">
+                    <input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()"
+                           class="btn btn-success btn-blook mb-3">
+                </div>
+                <div class="col-12">
+                    <input type="text" id="member_address" name="memberAddress" placeholder="주소" class="form-control mb-3">
+                    <input type="text" id="member_detailAddress" name="memberDetailAddress" placeholder="상세주소" class="form-control mb-3"
+                           oninput="detailAddress_check()">
+                    <input type="text" id="member-extraAddress" name="memberExtraAddress" placeholder="참고항목" class="form-control mb-3">
+                </div>
+            </div>
+            <h6 id="postcode-result"></h6>
+            <label for="member-email">이메일 입력</label>
+            <div class="row">
+                <div class="col-md-5 pr-0">
+                    <input type="text" id="member-email" name="memberEmailFront" oninput="email_check()"
+                           class="form-control mb-3">
+                </div>
+                <div class="col-auto pl-0 pr-0 at-symbol">
+                    <span>@</span>
+                </div>
+                <div class="col-md-3 pl-0">
+                    <input type="text" id="email-domain" name="memberDomain" class="form-control mb-3">
+                </div>
+                <div class="col-md-3">
+                    <select id="email-domain-select" onchange="domain_select()" class="form-select mb-3">
+                        <option value="">직접입력</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="nate.com">nate.com</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-2">
+                <input type="button" id="send-verification-code" class="btn btn-success mb-3" value="인증코드 전송"
+                       onclick="sendVerificationCode()">
+            </div>
+        </div>
+        <h6 id="email-result"></h6>
+        <label for="verification-code">인증코드</label>
+        <div class="row g-2">
+            <div class="col-5">
+                <input type="text" id="verification-code" class="form-control mb-3">
+                <small id="verification-code-help" class="form-text text-muted">이메일로 전송된 인증코드를 입력하세요.</small>
+            </div>
+            <div class="col-md-3">
+                <input type="button" id="verify-code" class="btn btn-success mb-3" value="인증 확인"
+                       onclick="verifyCode()">
+            </div>
+            <h6 id="verification-code-result"></h6>
+        </div>
+        <div class="form-group">
+            <div>SMS 마케팅 수신동의</div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="select" id="Yes" value="예" checked>
+                <label class="form-check-label" for="Yes">예</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="select" id="No" value="아니요">
+                <label class="form-check-label" for="No">아니요</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>이메일 마케팅 수신동의</div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="GenderYes" value="예" checked>
+                <label class="form-check-label" for="GenderYes">예</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="GenderNo" value="아니요">
+                <label class="form-check-label" for="GenderNo">아니요</label>
+            </div>
+        </div>
+
+        <div class="row g-2">
+            <div class="col d-grid">
+                <input type="submit" class="btn btn-outline-success btn-block" value="가입하기" onclick="join_click()">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

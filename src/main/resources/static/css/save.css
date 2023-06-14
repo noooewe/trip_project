@@ -1,0 +1,33 @@
+* {
+    font-family: 'Poor Story', cursive;
+}
+
+body {
+    max-width: 650px;
+    /* 원하는 최대 넓이로 설정 */
+    margin: 0 auto;
+    /* 오른쪽과 왼쪽을 맞춤 */
+    padding: 20px;
+    /* 간격을 조절 */
+}
+
+.at-symbol {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.at-symbol span {
+    display: inline-block;
+    padding: 1px 0;
+    vertical-align: middle;
+    font-size: 27px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form-check {
+    margin-bottom: 10px;
+}

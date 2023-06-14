@@ -19,11 +19,14 @@ public class MemberEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50, unique = true, nullable = false)
+    @Column(length = 20, unique = true, nullable = false)
     private String memberUserName;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 16, nullable = false)
     private String memberPassword;
+
+    @Column(length = 16, nullable = false)
+    private String memberPasswordCheck;
 
     @Column(length = 20, nullable = false)
     private String memberName;
@@ -49,7 +52,16 @@ public class MemberEntity {
     @Column(length = 5, nullable = false)
     private int memberBirthDay;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 10, nullable = false)
+    private String memberPostcode;
+
+    @Column(length = 50, nullable = false)
+    private String memberDetailAddress;
+
+    @Column(length = 50, nullable = false)
+    private String memberExtraAddress;
+
+    @Column(length = 50, nullable = false)
     private String memberAddress;
 
     @Column(length = 20, unique = true, nullable = false)
@@ -64,24 +76,36 @@ public class MemberEntity {
     @Column(length = 30, unique = true, nullable = false)
     private String memberPassportNum;
 
+    @Column(length = 5, nullable = false)
+    private String memberSms;
+
+    @Column(length = 5, nullable = false)
+    private String memberEmailMarketing;
+
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setId(memberDTO.getId());
         memberEntity.setMemberUserName(memberDTO.getMemberUserName());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberPasswordCheck(memberDTO.getMemberPasswordCheck());
         memberEntity.setMemberName(memberDTO.getMemberName());
         memberEntity.setMemberGender(memberDTO.getMemberGender());
         memberEntity.setMemberCountryCode(memberDTO.getMemberCountryCode());
-
+        memberEntity.setMemberTelecom(memberDTO.getMemberTelecom());
         memberEntity.setMemberMobile(memberDTO.getMemberMobile());
         memberEntity.setMemberBirthYear(memberDTO.getMemberBirthYear());
         memberEntity.setMemberBirthMonth(memberDTO.getMemberBirthMonth());
         memberEntity.setMemberBirthDay(memberDTO.getMemberBirthDay());
+        memberEntity.setMemberPostcode(memberDTO.getMemberPostcode());
         memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+        memberEntity.setMemberDetailAddress(memberDTO.getMemberDetailAddress());
+        memberEntity.setMemberExtraAddress(memberDTO.getMemberExtraAddress());
         memberEntity.setMemberEmailFront(memberDTO.getMemberEmailFront());
         memberEntity.setMemberDomain(memberDTO.getMemberDomain());
         memberEntity.setMemberHint(memberDTO.getMemberHint());
         memberEntity.setMemberPassportNum(memberDTO.getMemberPassportNum());
+        memberEntity.setMemberSms(memberDTO.getMemberSms());
+        memberEntity.setMemberEmailMarketing(memberDTO.getMemberEmailMarketing());
         return memberEntity;
 
     }

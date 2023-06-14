@@ -3,11 +3,10 @@ package com.portfolio.trip_project.controller;
 import com.portfolio.trip_project.dto.MemberDTO;
 import com.portfolio.trip_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,5 +23,15 @@ public class MemberController {
     public String save(@ModelAttribute MemberDTO memberDTO) {
         memberService.save(memberDTO);
         return "index";
+    }
+
+    @PostMapping("/userName-check")
+    public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO) {
+        boolean result = memberService.userNameCheck(memberDTO.getMemberUserName());
+        if(result) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 }

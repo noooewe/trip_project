@@ -43,13 +43,13 @@ public class MemberEntity {
     @Column(length = 20, nullable = false)
     private String memberMobile;
 
-    @Column(length = 10, nullable = false)
+    @Column(nullable = false)
     private int memberBirthYear;
 
-    @Column(length = 5, nullable = false)
+    @Column(nullable = false)
     private int memberBirthMonth;
 
-    @Column(length = 5, nullable = false)
+    @Column(nullable = false)
     private int memberBirthDay;
 
     @Column(length = 10, nullable = false)

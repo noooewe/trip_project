@@ -41,7 +41,8 @@
             <div class="col-md-4 d-flex align-items-center">
                 <div class="form-label mb-3">성별</div>
                 <div class="form-check form-check-inline mx-3 align-items-center" style="height: 100%;">
-                    <input class="form-check-input" type="radio" name="memberGender" id="gender-male" value="male" checked>
+                    <input class="form-check-input" type="radio" name="memberGender" id="gender-male" value="male"
+                           checked>
                     <label class="form-check-label mb-2" for="gender-male">남자</label>
                 </div>
                 <div class="form-check form-check-inline mx-3 align-items-center" style="height: 100%;">
@@ -53,30 +54,30 @@
         <h6 id="name-result"></h6>
         <div>휴대전화</div>
         <select name="memberCountryCode" id="country_code" class="form-control mb-3" onchange="CountryCode_select()">
-                    <option value="">직접입력</option>
+            <option value="">직접입력</option>
 
-                    <!-- 아시아 -->
-                    <optgroup label="Asia">
-                        <option value="+82" selected>대한민국 +82</option>
-                        <option value="+81">Japan +81</option>
-                        <option value="+63">Philippines +63</option>
-                        <option value="+66">Thailand +66</option>
-                        <option value="+84">Vietnam +84</option>
-                    </optgroup>
+            <!-- 아시아 -->
+            <optgroup label="Asia">
+                <option value="+82" selected>대한민국 +82</option>
+                <option value="+81">Japan +81</option>
+                <option value="+63">Philippines +63</option>
+                <option value="+66">Thailand +66</option>
+                <option value="+84">Vietnam +84</option>
+            </optgroup>
 
-                    <!-- 아프리카 -->
-                    <optgroup label="Africa">
-                        <option value="+212">Morocco +212</option>
-                    </optgroup>
+            <!-- 아프리카 -->
+            <optgroup label="Africa">
+                <option value="+212">Morocco +212</option>
+            </optgroup>
 
-                    <!-- 유럽 -->
-                    <optgroup label="Europe">
-                        <option value="+33">France +33</option>
-                        <option value="+39">Italy +39</option>
-                        <option value="+49">Germany +49</option>
-                        <option value="+44">UK +44</option>
-                        <option value="+7">Russia +7</option>
-                        <option value="+39">Spain +39</option>
+            <!-- 유럽 -->
+            <optgroup label="Europe">
+                <option value="+33">France +33</option>
+                <option value="+39">Italy +39</option>
+                <option value="+49">Germany +49</option>
+                <option value="+44">UK +44</option>
+                <option value="+7">Russia +7</option>
+                <option value="+39">Spain +39</option>
             </optgroup>
 
             <!-- 북미 -->
@@ -98,7 +99,7 @@
                 </select>
             </div>
             <div class="col-6">
-                <input type="tel" id="member-mobile" name="memberMobile" oninput="mobile_check()"
+                <input type="tel" id="member-mobile" name="memberMobile"
                        class="form-control mb-3" placeholder="전화번호 입력">
             </div>
             <div class="col-4 d-grid">
@@ -128,18 +129,18 @@
                 <select name="memberBirthMonth" id="member-birthMonth" class="form-select mb-3"
                         oninput="birth_check()">
                     <option value="1">월</option>
-                    <option value="2"> 1월 </option>
-                    <option value="3"> 2월 </option>
-                    <option value="4"> 3월 </option>
-                    <option value="5"> 4월 </option>
-                    <option value="6"> 5월 </option>
-                    <option value="7"> 6월 </option>
-                    <option value="8"> 7월 </option>
-                    <option value="9"> 8월 </option>
-                    <option value="10"> 9월 </option>
-                    <option value="11"> 10월 </option>
-                    <option value="12"> 11월 </option>
-                    <option value="13"> 12월 </option>
+                    <option value="2"> 1월</option>
+                    <option value="3"> 2월</option>
+                    <option value="4"> 3월</option>
+                    <option value="5"> 4월</option>
+                    <option value="6"> 5월</option>
+                    <option value="7"> 6월</option>
+                    <option value="8"> 7월</option>
+                    <option value="9"> 8월</option>
+                    <option value="10"> 9월</option>
+                    <option value="11"> 10월</option>
+                    <option value="12"> 11월</option>
+                    <option value="13"> 12월</option>
                 </select>
             </div>
             <div class="col">
@@ -158,13 +159,16 @@
                            class="btn btn-success btn-blook mb-3">
                 </div>
                 <div class="col-12">
-                    <input type="text" id="member_address" name="memberAddress" placeholder="주소" class="form-control mb-3">
-                    <input type="text" id="member_detailAddress" name="memberDetailAddress" placeholder="상세주소" class="form-control mb-3"
+                    <input type="text" id="member_address" name="memberAddress" placeholder="주소"
+                           class="form-control mb-3">
+                    <input type="text" id="member-detailAddress" name="memberDetailAddress" placeholder="상세주소"
+                           class="form-control mb-3"
                            oninput="detailAddress_check()">
-                    <input type="text" id="member-extraAddress" name="memberExtraAddress" placeholder="참고항목" class="form-control mb-3">
+                    <input type="text" id="member-extraAddress" name="memberExtraAddress" placeholder="참고항목"
+                           class="form-control mb-3">
                 </div>
             </div>
-            <h6 id="postcode-result"></h6>
+            <h6 id="address-result"></h6>
             <label for="member-email">이메일 입력</label>
             <div class="row">
                 <div class="col-md-5 pr-0">
@@ -216,7 +220,7 @@
         <label for="member-hint">힌트</label>
         <div class="row g-2">
             <div class="col-5">
-                <select id="member-selectHint" class="form-control mb-3" >
+                <select id="member-selectHint" class="form-control mb-3">
                     <option value="자신이 가장 사랑하는 도시는?">자신이 가장 사랑하는 도시는?</option>
                     <option value="가장 이상적인 국가는?">가장 이상적인 국가는?</option>
                     <option value="결혼후 가장 가고싶은 신혼여행지는?">결혼후 가장 가고싶은 신혼여행지는?</option>
@@ -245,72 +249,130 @@
         <div class="form-group">
             <div>이메일 마케팅 수신동의</div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="memberEmailMarketing" id="memberEmailMarketingYes" value="Yes" checked>
+                <input class="form-check-input" type="radio" name="memberEmailMarketing" id="memberEmailMarketingYes"
+                       value="Yes" checked>
                 <label class="form-check-label" for="memberEmailMarketingYes">예</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="memberEmailMarketing" id="memberEmailMarketingNo" value="No">
+                <input class="form-check-input" type="radio" name="memberEmailMarketing" id="memberEmailMarketingNo"
+                       value="No">
                 <label class="form-check-label" for="memberEmailMarketingNo">아니요</label>
             </div>
         </div>
 
         <div class="row g-2">
             <div class="col d-grid">
-                <input type="submit" class="btn btn-outline-success btn-block" value="가입하기" onclick="join_click()">
+                <input type="submit" class="btn btn-outline-success btn-block" value="가입하기" onclick="join_click(event)">
             </div>
         </div>
     </form>
 </div>
 </body>
 <script>
-    const userName_check = () => {
-        document.querySelector("#good").style.display = "none";
-        document.querySelector("#no").style.display = "none";
-        const userNameInput = document.querySelector("#member-userName");
-        const userName = userNameInput.value;
-        const userNameRegex = /^[a-zA-Z0-9]{6,20}$/; // 알파벳과 숫자를 조합한 6자 이상 20자 이하의 정규식
+    const saveForm = document.forms.saveForm;
+    saveForm.addEventListener('submit', function (event) {
+        if (!login_check()) {
+            event.preventDefault();
+        }
+    });
+    const login_check = async() => {
+        const userName = document.getElementById("member-userName");
+        const password = document.getElementById("member-password");
+        const passwordConfirm = document.getElementById("member-PasswordConfirm");
+        const name = document.getElementById("member-name");
+        const birthYear = document.getElementById("member-birthYear");
+        const birthMonth = document.getElementById("member-birthMonth");
+        const birthDay = document.getElementById("member-birthDay");
+        const postCode = document.getElementById("member-postcode");
+        const detailAddress = document.getElementById("member-detailAddress");
+        const passportNum = document.getElementById("member-passportNum");
+        const hint = document.getElementById("member-hint");
 
-        if (userName) {
-            if (!userNameRegex.test(userName)) {
-                alert("아이디는 알파벳과 숫자를 조합하여 6자 이상 20자 이하로 입력해주세요.");
-                userNameInput.focus();
-            } else {
-                axios({
-                    method: "post",
-                    url: "/member/userName-check",
-                    data: {
-                        memberUserName: userName
-                    }
-                }).then(res => {
-                    console.log("then");
-                    document.querySelector("#good").style.display = "block";
-                }).catch(err => {
-                    console.log("catch");
-                    document.querySelector("#no").style.display = "block";
-                });
-            }
+        if (!(await userName_check())) {
+            userName.focus();
+            return false;
+        } else if (!password_check()) {
+            password.focus();
+            return false;
+        } else if (!password_confirm()) {
+            passwordConfirm.focus();
+            return false;
+        } else if (!name_check()) {
+            name.focus();
+            return false;
+        } else if (!birth_check()) {
+            birthYear.focus();
+            birthMonth.focus();
+            birthDay.focus();
+            return false;
+        } else if (!postcode_check()) {
+            postCode.focus();
+            return false;
+        } else if (!detailAddress_check()) {
+            detailAddress.focus();
+            return false;
+        } else if (!passportNum_check()) {
+            passportNum.focus();
+            return false;
+        } else if (!member_hintCheck()) {
+            hint.focus();
+            return false;
         } else {
-            alert("필수 입력사항입니다..");
-            userNameInput.focus();
+            return true;
         }
     }
+    const userName_check = () => {
+        return new Promise((resolve, reject) => {
+            document.querySelector("#good").style.display = "none";
+            document.querySelector("#no").style.display = "none";
+            const userName = document.querySelector("#member-userName").value;
+            const userNameRegex = /^[a-zA-Z0-9]{6,20}$/;
 
+            if (userName) {
+                if (!userNameRegex.test(userName)) {
+                    alert("아이디는 알파벳과 숫자를 조합하여 6자 이상 20자 이하로 입력해주세요.");
+                    resolve(false);
+                } else {
+                    axios({
+                        method: "post",
+                        url: "/member/userName-check",
+                        data: {
+                            memberUserName: userName
+                        }
+                    }).then(res => {
+                        console.log("then");
+                        document.querySelector("#good").style.display = "block";
+                        resolve(true);
+                    }).catch(err => {
+                        console.log("catch");
+                        document.querySelector("#no").style.display = "block";
+                        resolve(false);
+                    });
+                }
+            } else {
+                resolve(false);
+            }
+        });
+    }
     const password_check = () => {
         const password = document.querySelector("#member-password").value;
         const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%!@])[A-Za-z\d@$%!]{8,16}$/;
         const passwordResult = document.querySelector("#password-result");
 
-        if(!password) {
+        if (!password) {
             passwordResult.innerHTML = "필수 입력사항입니다.";
             passwordResult.style.color = "red";
-            document.querySelector("#member-password").focus();
+            return false;
+
         } else if (!passwordRegex.test(password)) {
             passwordResult.innerHTML = "올바른 형식이 아닙니다. 특수기호 @!#$%, 대소문자, 숫자를 조합하여 8~16자 사이로 입력해주세요.";
             passwordResult.style.color = "red";
-            document.querySelector("#member-password").focus();
+            return false;
+
         } else {
             passwordResult.innerHTML = "올바른 비밀번호입니다.";
             passwordResult.style.color = "green";
+            return true;
         }
     }
 
@@ -323,14 +385,17 @@
         if (!confirmPassword) {
             passwordConfirmResult.innerHTML = "필수 입력사항입니다.";
             passwordConfirmResult.style.color = "red";
-            confirmPassword.focus();
+            return false;
+
         } else if (password !== confirmPassword) {
             passwordConfirmResult.innerHTML = "비밀번호가 일치하지 않습니다.";
             passwordConfirmResult.style.color = "red";
-            confirmPassword.focus();
+            return false;
+
         } else {
             passwordConfirmResult.innerHTML = "비밀번호가 일치합니다.";
             passwordConfirmResult.style.color = "green";
+            return true;
         }
     }
 
@@ -345,49 +410,46 @@
         const name = document.querySelector("#member-name").value;
         const nameResult = document.querySelector("#name-result");
 
-        if(!name) {
+        if (!name) {
             nameResult.innerHTML = "필수 입력사항입니다.";
             nameResult.style.color = "red";
-            name.focus();
+            return false;
         } else {
             nameResult.innerHTML = "";
+            return true;
         }
     }
 
     const birth_check = () => {
-        const birthYear = document.querySelector("#member-birthYear");
-        const birthMonth = document.querySelector("#member-birthMonth");
-        const birthDay = document.querySelector("#member-birthDay");
+        const birthYear = document.querySelector("#member-birthYear").value;
+        const birthMonth = document.querySelector("#member-birthMonth").value;
+        const birthDay = document.querySelector("#member-birthDay").value;
         const birthResult = document.querySelector("#birth-result");
 
         const birthRegex = /^(19[1-9]\d|200[0-8])$/; // 4자리 숫자만 허용하는 정규식
         const dayRegex = /^(0[1-9]|[12]\d|3[01])$/; // 01부터 31까지의 두 자리 숫자만 허용하는 정규식
 
-        if (!birthYear.value || !birthMonth.value || !birthDay.value) {
+        if (!birthYear || !birthMonth || !birthDay) {
             birthResult.innerHTML = "필수 입력사항입니다.";
             birthResult.style.color = "red";
-            if (!birthYear.value) {
-                birthYear.focus();
-            } else if (!birthMonth.value) {
-                birthMonth.focus();
-            } else if (!birthDay.value) {
-                birthDay.focus();
-            }
-        } else if (!birthRegex.test(birthYear.value)) {
-            birthResult.innerHTML = "올바른 생년도 형식이 아닙니다. 4자리 숫자로 입력해주세요. (1910년생부터 2008년생 사이까지 입력이 가능합니다.)";
+            return false;
+        } else if (!birthRegex.test(birthYear)) {
+            birthResult.innerHTML =
+                "올바른 생년도 형식이 아닙니다. 4자리 숫자로 입력해주세요. (1910년생부터 2008년생 사이까지 입력이 가능합니다.)";
             birthResult.style.color = "red";
-            birthYear.focus();
-        } else if (!dayRegex.test(birthDay.value)) {
+            return false;
+        } else if (!dayRegex.test(birthDay)) {
             birthResult.innerHTML = "올바른 일 형식이 아닙니다. 01부터 31까지의 두 자리 숫자로 입력해주세요.";
             birthResult.style.color = "red";
-            birthDay.focus();
-        } else if (birthMonth.value < 1 || birthMonth.value > 12) {
+            return false;
+        } else if (birthMonth < 1 || birthMonth >= 12) {
             birthResult.innerHTML = "올바른 월 형식이 아닙니다. 1부터 12까지의 값을 선택해주세요.";
             birthResult.style.color = "red";
-            birthMonth.focus();
+            return false;
         } else {
             birthResult.innerHTML = "올바른 생년월일입니다.";
             birthResult.style.color = "green";
+            return true; // 생년월일이 유효한 경우 true를 반환
         }
     }
     const sample6_execDaumPostcode = () => {
@@ -433,8 +495,6 @@
                 document.getElementById('member-postcode').value = data.zonecode;
                 document.getElementById("member_address").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("member_detailAddress").focus();
-
                 postcode_check();
             }
         }).open();
@@ -442,43 +502,44 @@
 
     const postcode_check = () => {
         const postcode = document.getElementById("member-postcode").value;
-        const postCodeResult = document.getElementById("postcode-result");
+        const postCodeResult = document.getElementById("address-result");
         const RegExp = /^\d{5}$/; // 5자리 우편번호 정규식
 
         if (postcode.length === 0) {
             postCodeResult.innerHTML = "*필수입력사항 입니다.";
             postCodeResult.style.color = "red";
-            document.querySelector("#member-postcode").focus();
+            return false;
         } else if (!postcode.match(RegExp)) {
             postCodeResult.innerHTML = "*올바르지 않는 우편번호 형식 입니다.";
             postCodeResult.style.color = "red";
-            document.querySelector("#member-postcode").focus();
+            return false;
         } else {
             postCodeResult.innerHTML = "*우편번호가 확인되었습니다.";
             postCodeResult.style.color = "green";
+            return true;
         }
     }
-            // API, 데이터베이스 연동 후 사용할 조건문
-            // sample6_execDaumPostcode() 함수의 우편번호 정보에 없는 값을 넣을 경우의 조건식
-            // else if (새로운 우편번호와 일치하는 주소 정보가 없는 경우) {
-            //     postCodeResult.innerHTML = "*주소정보가 없는 우편번호입니다.";
-            //     postCodeResult.style.color = "red";
-            //     return false;
-        // }
-
+    // API, 데이터베이스 연동 후 사용할 조건문
+    // sample6_execDaumPostcode() 함수의 우편번호 정보에 없는 값을 넣을 경우의 조건식
+    // else if (새로운 우편번호와 일치하는 주소 정보가 없는 경우) {
+    //     postCodeResult.innerHTML = "*주소정보가 없는 우편번호입니다.";
+    //     postCodeResult.style.color = "red";
+    //     return false;
+    // }
 
 
     const detailAddress_check = () => {
-        const detailAddress = document.getElementById("member_detailAddress").value;
-        const detailAddressResult = document.getElementById("detailAddress-result");
+        const detailAddress = document.getElementById("member-detailAddress").value;
+        const detailAddressResult = document.getElementById("address-result");
 
         if (detailAddress.length === 0) {
             detailAddressResult.innerHTML = "*필수입력사항 입니다.";
             detailAddressResult.style.color = "red";
-            document.querySelector("#member_detailAddress").focus();
+            return false;
         } else {
             detailAddressResult.innerHTML = "*상세주소가 확인되었습니다.";
             detailAddressResult.style.color = "green";
+            return true;
         }
     }
 
@@ -496,10 +557,11 @@
         if (passportNum.length === 0) {
             passportNumResult.innerHTML = "*필수입력사항 입니다.";
             passportNumResult.style.color = "red";
-            document.querySelector("#member-passportNum").focus();
+            return false;
         } else {
             passportNumResult.innerHTML = "*여권번호가 확인되었습니다.";
             passportNumResult.style.color = "green";
+            return true;
         }
     }
 
@@ -511,33 +573,25 @@
         if (memberHint.length === 0) {
             memberHintResult.innerHTML = "*필수입력사항 입니다.";
             memberHintResult.style.color = "red";
-            document.querySelector("#member-hint").focus();
+            return false;
         } else {
             memberHintResult.innerHTML = "*힌트가 확인되었습니다.";
             memberHintResult.style.color = "green";
+            return true;
         }
     }
+    const join_click = async (event) => {
+        // prevent form submission if validation fails
+        event.preventDefault();
 
+        const result = await login_check();
 
-
-    const join_click = () => {
-        // 각 필드의 유효성 검사를 위한 함수를 모두 호출
-        userName_check();
-        password_check();
-        password_confirm();
-        name_check();
-        birth_check();
-        postcode_check();
-        detailAddress_check();
-        passportNum_check();
-        member_hintCheck();
-
-        // 모든 필드가 유효한 경우
-        // 각 필드 검사 함수에서 유효하지 않은 필드를 만나면 즉시 focus가 이동하므로
-        // 모든 함수를 호출한 후에도 아무런 입력 필드에 focus가 없다면 모든 필드가 유효하다는 것을 의미
-        if(document.activeElement.tagName !== "INPUT") {
+        if (result) {
             const result1 = confirm("회원가입을 완료하시겠습니까?");
+
             if (result1) {
+                // Only here we submit the form to the server.
+                document.forms['saveForm'].submit();
                 alert("행복투어의 일원이 되신걸 환영합니다.");
             } else {
                 history.back();
@@ -546,6 +600,5 @@
             alert("필수사항을 입력하지 않았습니다!!");
         }
     }
-
 </script>
 </html>

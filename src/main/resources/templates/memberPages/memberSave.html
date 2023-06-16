@@ -128,19 +128,19 @@
             <div class="col">
                 <select name="memberBirthMonth" id="member-birthMonth" class="form-select mb-3"
                         oninput="birth_check()">
-                    <option value="1">월</option>
-                    <option value="2"> 1월</option>
-                    <option value="3"> 2월</option>
-                    <option value="4"> 3월</option>
-                    <option value="5"> 4월</option>
-                    <option value="6"> 5월</option>
-                    <option value="7"> 6월</option>
-                    <option value="8"> 7월</option>
-                    <option value="9"> 8월</option>
-                    <option value="10"> 9월</option>
-                    <option value="11"> 10월</option>
-                    <option value="12"> 11월</option>
-                    <option value="13"> 12월</option>
+                    <option value="">월</option>
+                    <option value="1"> 1월</option>
+                    <option value="2"> 2월</option>
+                    <option value="3"> 3월</option>
+                    <option value="4"> 4월</option>
+                    <option value="5"> 5월</option>
+                    <option value="6"> 6월</option>
+                    <option value="7"> 7월</option>
+                    <option value="8"> 8월</option>
+                    <option value="9"> 9월</option>
+                    <option value="10"> 10월</option>
+                    <option value="11"> 11월</option>
+                    <option value="12"> 12월</option>
                 </select>
             </div>
             <div class="col">
@@ -442,7 +442,7 @@
             birthResult.innerHTML = "올바른 일 형식이 아닙니다. 01부터 31까지의 두 자리 숫자로 입력해주세요.";
             birthResult.style.color = "red";
             return false;
-        } else if (birthMonth < 1 || birthMonth >= 12) {
+        } else if (birthMonth < 1 || birthMonth > 12) {
             birthResult.innerHTML = "올바른 월 형식이 아닙니다. 1부터 12까지의 값을 선택해주세요.";
             birthResult.style.color = "red";
             return false;
@@ -597,7 +597,7 @@
                 history.back();
             }
         } else {
-            alert("필수사항을 입력하지 않았습니다!!");
+            alert("필수사항을 만족하지 않았습니다!!");
         }
     }
 </script>

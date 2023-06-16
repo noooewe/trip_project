@@ -64,7 +64,7 @@ public class MemberEntity {
     @Column(length = 50, nullable = false)
     private String memberAddress;
 
-    @Column(length = 20, unique = true, nullable = false)
+    @Column(length = 20, nullable = false)
     private String memberEmailFront;
 
     @Column(length = 20, nullable = false)

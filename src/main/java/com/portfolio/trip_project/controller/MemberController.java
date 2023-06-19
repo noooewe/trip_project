@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -25,9 +27,42 @@ public class MemberController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String loginForm() {
+        return "memberPages/memberLogin";
+    }
+
+    @PostMapping("/login")
+    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        boolean loginResult = memberService.login(memberDTO);
+        if(loginResult) {
+            session.setAttribute("loginUserName", memberDTO.getMemberUserName());
+            return "memberPages/memberMain";
+        } else {
+            return "memberPages/memberLogin";
+        }
+    }
+
+    @PostMapping("/login/axios")
+    public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
+        memberService.loginAxios(memberDTO);
+        session.setAttribute("loginUserName", memberDTO.getMemberUserName());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/userName-check")
     public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO) {
         boolean result = memberService.userNameCheck(memberDTO.getMemberUserName());
+        if(result) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @PostMapping("/passPortNum-check")
+    public ResponseEntity passPortNumCheck(@RequestBody MemberDTO memberDTO) {
+        boolean result = memberService.passPortNumCheck(memberDTO.getMemberPassportNum());
         if(result) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

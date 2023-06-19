@@ -1,10 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="component/config :: config"></th:block>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-
+<li class="nav-item">
+    <a class="nav-link" href="/" style="display: inline-block;">
+        <button class="btn" style="border: none;"><i class="bi bi-caret-left-fill">홈페이지로 돌아가기</i></button>
+    </a>
+</li>
+<form action="/member/login" name="loginForm" method="post">
+    <div class="container text-center mt-5">
+        <h1><strong><i class="bi bi-airplane-engines"></i> 로그인 </strong></h1> <br>
+    </div>
+    <div class="container mt-5">
+        <form action="#" name="loginForm" method="post">
+            <div class="form-floating mb-3">
+                <input type="text" id="memberLogin-Id" name="memberLoginId" autocompelete="off" class="form-control"
+                       placeholder="아이디을 입력해주세요" oninput="login_id()">
+                <label for="memberlogin-Id">아이디</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" id="memberLogin-password" name="memberLoginPassword" autocompelete="off"
+                       class="form-control" placeholder="비밀번호를 입력해주세요" oninput="login_password()">
+                <label for="memberLogin-password">비밀번호</label>
+            </div>
+            <h6 id="login-result"></h6>
+            <div class="form-check mb-3">
+                <input type="checkbox" id="remember-id-checkbox" name="rememberIdCheckbox" class="form-check-input">
+                <label class="form-check-label" for="remember-id-checkbox">아이디 저장</label>
+            </div>
+            <div class="row g-2">
+                <div class="col d-grid">
+                    <button type="submit" id="login-button" class="btn btn-success" disabled>로그인</button>
+                </div>
+            </div>
+        </form>
+        <div class="mt-3">
+            <span id="id-find" name="idFind" class="ble-text mb-3">아이디 찾기</span> <!-- onclick="id_find()" -->
+            <span class="mb-3">|</span>
+            <span id="password-find" name="passwordFind" class="clickable-text mb-3">비밀번호
+                <!-- onclick="password_find()" -->
+                찾기</span>
+            <span style="float: right;"><span id="membership-join" name="membershipJoin" class="clickable-text mb-3"><i
+                    class="bi bi-person-fill-add"></i> <a href="/member/save">회원
+                <!-- onclick="membership_join()" -->
+                        가입</a></span></span>
+        </div>
+    </div>
+</form>
+</div>
+</form>
+<div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    //콜백함수
+    //다른 함수의 인자로 전달되어, 나중에 필요한 시점에 호출되는 함수
+    //콜백 함수를 사용함으로 함수의 재사용성과 유연성을 높힘.
+    document.addEventListener("DOMContentLoaded", function () {
+        var clickableTexts = document.getElementsByClassName("clickable-text");
+        for (var i = 0; i < clickableTexts.length; i++) {
+            //clickableTexts[i].style.cursor = "pointer";: clickable-Text인 요소들에
+            // 대해 마우스 커서를 손가락으로 변경
+            // for문을 사용하여 HTML 객체의 각 요소로 접근, 각 요소에 대해 속성값을 설정하는 방식
+            clickableTexts[i].style.cursor = "pointer";
+        }
+    });
+
+    const loginForm = document.forms.loginForm;
+    loginForm.addEventListener('submit', function (event) {
+        if (!login_click()) {
+            event.preventDefault();
+        }
+    });
+    const login_click = () => {
+        const loginId = document.getElementById("memberLogin-Id");
+        const loginPassword = document.getElementById("memberLogin-password");
+
+        if (!login_id()) {
+            loginId.focus();
+            return false;
+        } else if (!login_password()) {
+            loginPassword.focus();
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+    const updateLoginButtonState = () => {
+        const loginButton = document.getElementById("login-button");
+        if (login_id() && login_password()) {
+            loginButton.removeAttribute("disabled");
+        } else {
+            loginButton.setAttribute("disabled", "disabled");
+        }
+    }
+
+
+    const login_id = () => {
+        const loginId = document.getElementById("memberLogin-Id").value;
+        const loginIdResult = document.getElementById("login-result");
+        const RegExp = /^[a-zA-Z0-9]{6,14}$/;
+
+        if (loginId.length == 0) {
+            loginIdResult.innerHTML = "아이디를 입력해주세요.";
+            loginIdResult.style.color = "red";
+            return false;
+        } else if (!loginId.match(RegExp)) {
+            loginIdResult.innerHTML = "아이디를 영 대,소문자와 숫자를 6~14자 이내로 입력해주세요.";
+            loginIdResult.style.color = "red";
+            return false;
+        } else {
+            loginIdResult.innerHTML = "";
+            return true;
+        }
+    }
+
+    const login_password = () => {
+        const loginPassword = document.getElementById("memberLogin-password").value;
+        const loginPasswordResult = document.getElementById("login-result");
+
+        if (loginPassword.length == 0) {
+            loginPasswordResult.innerHTML = "비밀번호를 입력해주세요.";
+            loginPasswordResult.style.color = "red";
+            return false;
+        } else {
+            loginPasswordResult.innerHTML = "";
+            return true;
+        }
+    }
+
+    const rememberId = () => {
+        var rememberIdCheckbox = document.getElementById("remember-id-checkbox");
+        var memberLoginId = document.getElementById("memberLogin-Id").value;
+        if (rememberIdCheckbox.checked) {
+            localStorage.setItem("memberLoginId", memberLoginId);
+        } else {
+            localStorage.removeItem("memberLoginId");
+        }
+    }
+
+    // 로그인 폼 제출 시 아이디 저장 기능 호출
+    var loginForm = document.forms["loginForm"];
+    loginForm.addEventListener("submit", function () {
+        rememberId();
+    });
+
+    // 페이지 로드 시 로컬 스토리지에 저장된 아이디 값이 있다면 아이디 입력 필드에 자동으로 입력하는 코드
+    var savedId = localStorage.getItem("memberLoginId");
+    if (savedId) {
+        var memberLoginIdInput = document.getElementById("memberLogin-Id");
+        memberLoginIdInput.value = savedId;
+        var rememberIdCheckbox = document.getElementById("remember-id-checkbox");
+        rememberIdCheckbox.checked = true;
+    }
+    document.getElementById("memberLogin-Id").addEventListener("input", updateLoginButtonState);
+    document.getElementById("memberLogin-password").addEventListener("input", updateLoginButtonState);
+
+</script>
 </html>

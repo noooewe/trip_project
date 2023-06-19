@@ -1,14 +1,12 @@
+
 * {
     font-family: 'Poor Story', cursive;
 }
 
 body {
     max-width: 650px;
-    /* 원하는 최대 넓이로 설정 */
     margin: 0 auto;
-    /* 오른쪽과 왼쪽을 맞춤 */
     padding: 20px;
-    /* 간격을 조절 */
 }
 
 .at-symbol {
@@ -30,4 +28,13 @@ label {
 
 .form-check {
     margin-bottom: 10px;
+}
+
+.nav-item {
+    list-style-type: none;
+    position: fixed;
+    top: 0;
+    left: 38%;
+    transform: translateX(-50%);
+    z-index: 9999;
 }

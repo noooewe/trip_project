@@ -21,4 +21,5 @@ public class BoardDTO {
     private int fileAttached;               //게시글 파일 업로드 여부
     private List<MultipartFile> boardFile;  //게시글 파일
     private int commentShow;                //게시글 댓글수
+    private Long memberId;
 }

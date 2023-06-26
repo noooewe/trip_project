@@ -21,6 +21,9 @@ public class CommentEntity extends BaseEntity {
     @Column(length = 200, nullable = false)
     private String commentContents;
 
+    @Column
+    private int commentStar;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
@@ -29,6 +32,7 @@ public class CommentEntity extends BaseEntity {
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setCommentWriter(commentDTO.getCommentWriter());
         commentEntity.setCommentContents(commentDTO.getCommentContents());
+        commentEntity.setCommentStar(commentEntity.getCommentStar());
         commentEntity.setBoardEntity(boardEntity);
         return commentEntity;
     }

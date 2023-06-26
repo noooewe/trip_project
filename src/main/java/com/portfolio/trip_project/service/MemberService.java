@@ -5,6 +5,7 @@ import com.portfolio.trip_project.entity.MemberEntity;
 import com.portfolio.trip_project.repository.MemberRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,35 +19,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Long save(MemberDTO memberDTO) {
+        memberDTO.setMemberPassword(passwordEncoder.encode(memberDTO.getMemberPassword()));
         MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
         return memberRepository.save(memberEntity).getId();
     }
 
     public boolean login(MemberDTO memberDTO) {
         Optional<MemberEntity> memberEntity =
-                memberRepository.findByMemberUserNameAndMemberPassword(memberDTO.getMemberUserName(), memberDTO.getMemberPassword());
-        if (memberEntity.isPresent()) {
+                memberRepository.findByMemberUserName(memberDTO.getMemberUserName());
+        if (memberEntity.isPresent() && passwordEncoder.matches(memberDTO.getMemberPassword(), memberEntity.get().getMemberPassword())) {
             return true;
         } else {
             return false;
         }
     }
-
     public void loginAxios(MemberDTO memberDTO) {
-        memberRepository.findByMemberUserNameAndMemberPassword(memberDTO.getMemberUserName(), memberDTO.getMemberPassword())
-                .orElseThrow(() -> new NoSuchElementException("아이디 또는 비밀번호가 틀립니다."));
+        MemberEntity memberEntity = memberRepository.findByMemberUserName(memberDTO.getMemberUserName())
+                .orElseThrow(() -> new NoSuchElementException("아이디가 틀립니다."));
+        if(!passwordEncoder.matches(memberDTO.getMemberPassword(), memberEntity.getMemberPassword())) {
+            throw new NoSuchElementException("비밀번호가 틀립니다.");
+        }
     }
-
 
 
     public boolean userNameCheck(String memberUserName) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberUserName(memberUserName);
-        if(optionalMemberEntity.isEmpty()) {
-            return true;
-        } else {
+        if(optionalMemberEntity.isPresent()) {
             return false;
+        } else {
+            return true;
         }
     }
     public boolean passPortNumCheck(String memberPassportNum) {

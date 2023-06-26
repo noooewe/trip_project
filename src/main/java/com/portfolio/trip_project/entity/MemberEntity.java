@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,10 +23,10 @@ public class MemberEntity {
     @Column(length = 20, unique = true, nullable = false)
     private String memberUserName;
 
-    @Column(length = 16, nullable = false)
+    @Column(length = 100, nullable = false)
     private String memberPassword;
 
-    @Column(length = 16, nullable = false)
+    @Column(length = 100, nullable = false)
     private String memberPasswordCheck;
 
     @Column(length = 20, nullable = false)
@@ -73,7 +74,7 @@ public class MemberEntity {
     @Column(length = 20, nullable = false)
     private String memberHint;
 
-    @Column(length = 30, unique = true, nullable = false)
+    @Column(length = 16, unique = true, nullable = false)
     private String memberPassportNum;
 
     @Column(length = 5, nullable = false)
@@ -81,6 +82,9 @@ public class MemberEntity {
 
     @Column(length = 5, nullable = false)
     private String memberEmailMarketing;
+
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardEntity> boardEntityList = new ArrayList<>();
 
     public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();

@@ -17,23 +17,25 @@
     <div class="container mt-5">
         <form action="#" name="loginForm" method="post">
             <div class="form-floating mb-3">
-                <input type="text" id="memberLogin-Id" name="memberLoginId" autocompelete="off" class="form-control"
-                       placeholder="아이디을 입력해주세요" oninput="login_id()">
-                <label for="memberlogin-Id">아이디</label>
+                <input type="text" id="memberLogin-Id" name="memberUserName" autocompelete="off" class="form-control"
+                       placeholder="아이디을 입력해주세요">
+                <label for="memberLogin-Id">아이디</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="password" id="memberLogin-password" name="memberLoginPassword" autocompelete="off"
-                       class="form-control" placeholder="비밀번호를 입력해주세요" oninput="login_password()">
+                <input type="password" id="memberLogin-password" name="memberPassword" autocompelete="off"
+                       class="form-control" placeholder="비밀번호를 입력해주세요">
                 <label for="memberLogin-password">비밀번호</label>
             </div>
-            <h6 id="login-result"></h6>
+            <p id="login-result" style="color: red; display: none" >
+                이메일 또는 비밀번호가 틀립니다!
+            </p>
             <div class="form-check mb-3">
                 <input type="checkbox" id="remember-id-checkbox" name="rememberIdCheckbox" class="form-check-input">
                 <label class="form-check-label" for="remember-id-checkbox">아이디 저장</label>
             </div>
             <div class="row g-2">
                 <div class="col d-grid">
-                    <button type="submit" id="login-button" class="btn btn-success" disabled>로그인</button>
+                    <button type="submit" id="login-button" class="btn btn-success" disabled onclick="login()">로그인</button>
                 </div>
             </div>
         </form>
@@ -98,38 +100,25 @@
         }
     }
 
+    const login = () => {
+        const email = document.querySelector('input[name="memberUserName"]').value;
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        axios({
+            method: "post",
+            url: "/member/login/axios",
+            data: {
+                memberEmail: email,
+                memberPassword: password
+            }
+        }).then(res => {
+            console.log("res", res);
+            location.href = "/";
+        }).catch(err => {
+            console.log("err", err);
+            // document.querySelector("#login-result").style.display = "block";
+            document.getElementById("login-result").style.display = "block";
+        });
 
-    const login_id = () => {
-        const loginId = document.getElementById("memberLogin-Id").value;
-        const loginIdResult = document.getElementById("login-result");
-        const RegExp = /^[a-zA-Z0-9]{6,14}$/;
-
-        if (loginId.length == 0) {
-            loginIdResult.innerHTML = "아이디를 입력해주세요.";
-            loginIdResult.style.color = "red";
-            return false;
-        } else if (!loginId.match(RegExp)) {
-            loginIdResult.innerHTML = "아이디를 영 대,소문자와 숫자를 6~14자 이내로 입력해주세요.";
-            loginIdResult.style.color = "red";
-            return false;
-        } else {
-            loginIdResult.innerHTML = "";
-            return true;
-        }
-    }
-
-    const login_password = () => {
-        const loginPassword = document.getElementById("memberLogin-password").value;
-        const loginPasswordResult = document.getElementById("login-result");
-
-        if (loginPassword.length == 0) {
-            loginPasswordResult.innerHTML = "비밀번호를 입력해주세요.";
-            loginPasswordResult.style.color = "red";
-            return false;
-        } else {
-            loginPasswordResult.innerHTML = "";
-            return true;
-        }
     }
 
     const rememberId = () => {

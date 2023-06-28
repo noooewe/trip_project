@@ -1,10 +1,14 @@
 package com.portfolio.trip_project.service;
 
+import com.portfolio.trip_project.config.MemberDetails;
 import com.portfolio.trip_project.dto.MemberDTO;
 import com.portfolio.trip_project.entity.MemberEntity;
 import com.portfolio.trip_project.repository.MemberRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -42,6 +46,14 @@ public class MemberService {
         if(!passwordEncoder.matches(memberDTO.getMemberPassword(), memberEntity.getMemberPassword())) {
             throw new NoSuchElementException("비밀번호가 틀립니다.");
         }
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberUserName(username);
+        MemberEntity memberEntity = optionalMemberEntity.orElseThrow(() -> new UsernameNotFoundException("아이디가 틀립니다."));
+        return new MemberDetails(memberEntity);
     }
 
 

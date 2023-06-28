@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -50,20 +51,26 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/userName-check")
-    public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO) {
+    @RequestMapping(value = "/userName-check", method = RequestMethod.POST)
+    public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
+        String csrfToken = request.getHeader("X-CSRF-TOKEN");
+        System.out.println("CSRF Token: " + csrfToken);
+
         boolean result = memberService.userNameCheck(memberDTO.getMemberUserName());
-        if(result) {
+        if (result) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 
-    @PostMapping("/passPortNum-check")
-    public ResponseEntity passPortNumCheck(@RequestBody MemberDTO memberDTO) {
+    @RequestMapping(value = "/passPortNum-check", method = RequestMethod.POST)
+    public ResponseEntity passPortNumCheck(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
+        String csrfToken = request.getHeader("X-CSRF-TOKEN");
+        System.out.println("CSRF Token: " + csrfToken);
+
         boolean result = memberService.passPortNumCheck(memberDTO.getMemberPassportNum());
-        if(result) {
+        if (result) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

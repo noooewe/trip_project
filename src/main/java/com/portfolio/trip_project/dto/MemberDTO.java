@@ -35,6 +35,8 @@ public class MemberDTO {
         private String memberEmailMarketing;
         private List<PassengerDTO> passengers; //추가 탑승객 정보
         private int mileage;           //사용자 마일리지
+        private boolean memberEnabled; //관리자 계정 여부
+        private boolean memberBlacklisted; //
 
 
         public LocalDate getBirthDate() {

@@ -336,39 +336,58 @@
             return true;
         }
     }
-    const userName_check = () => {
-        return new Promise((resolve, reject) => {
-            document.querySelector("#good").style.display = "none";
-            document.querySelector("#no").style.display = "none";
-            const userName = document.querySelector("#member-userName").value;
-            const userNameRegex = /^[a-zA-Z0-9]{6,20}$/;
 
-            if (userName) {
-                if (!userNameRegex.test(userName)) {
-                    alert("*아이디는 알파벳과 숫자를 조합하여 6자 이상 20자 이하로 입력해주세요.");
-                    resolve(false);
-                } else {
-                    axios({
-                        method: "post",
-                        url: "/member/userName-check",
-                        data: {
-                            memberUserName: userName
-                        }
-                    }).then(res => {
-                        console.log("then");
-                        document.querySelector("#good").style.display = "block";
-                        resolve(true);
-                    }).catch(err => {
-                        console.log("catch");
-                        document.querySelector("#no").style.display = "block";
-                        resolve(false);
-                    });
-                }
+    // 쿠키에서 값을 가져오는 함수
+    // CSRF 토큰을 가져오는 함수
+    const getCsrfToken = async () => {
+        try {
+            const response = await fetch('/csrf-token');
+            const data = await response.json();
+            return data.csrfToken;
+        } catch (error) {
+            console.error('CSRF 토큰을 가져오는 동안 오류가 발생했습니다.', error);
+            return null;
+        }
+    };
+
+    const userName_check = async () => {
+        // 사용자 이름 체크 로직...
+        const userName = document.querySelector("#member-userName").value;
+        const userNameRegex = /^[a-zA-Z0-9]{6,20}$/;
+
+        if (userName) {
+            if (!userNameRegex.test(userName)) {
+                alert("*아이디는 알파벳과 숫자를 조합하여 6자 이상 20자 이하로 입력해주세요.");
+                return false;
             } else {
-                resolve(false);
+                const csrfToken = await getCsrfToken();
+                if (!csrfToken) {
+                    console.error('CSRF 토큰을 가져오는 데 실패했습니다.');
+                    return false;
+                }
+
+                try {
+                    const response = await axios.post('/member/userName-check', {
+                        memberUserName: userName
+                    }, {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    });
+
+                    console.log("then");
+                    document.querySelector("#good").style.display = "block";
+                    return true;
+                } catch (error) {
+                    console.error('사용자 이름 체크 요청 중 오류가 발생했습니다:', error);
+                    document.querySelector("#no").style.display = "block";
+                    return false;
+                }
             }
-        });
-    }
+        } else {
+            return false;
+        }
+    };
     const password_check = () => {
         const password = document.querySelector("#member-password").value;
         const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%!@])[A-Za-z\d@$%!]{8,16}$/;
@@ -565,8 +584,8 @@
         domainInput.value = domain.value;
     }
 
-    const passportNum_check = () => {
-        return new Promise((resolve, reject) => {
+    const passportNum_check = async () => {
+        return new Promise(async (resolve, reject) => {
             document.querySelector("#pos").style.display = "none";
             document.querySelector("#dup").style.display = "none";
             const passportNum = document.querySelector("#member-passportNum").value;
@@ -577,28 +596,33 @@
                     alert("여권번호 형식이 맞지않습니다.");
                     resolve(false);
                 } else {
+                    const csrfToken = await getCsrfToken();
                     axios({
                         method: "post",
                         url: "/member/passPortNum-check",
+                        headers: {
+                            "X-CSRF-TOKEN": csrfToken,
+                        },
                         data: {
-                            memberPassportNum: passportNum
-                        }
-                    }).then(res => {
-                        console.log("then");
-                        document.querySelector("#pos").style.display = "block";
-                        resolve(true);
-                    }).catch(err => {
-                        console.log("catch");
-                        document.querySelector("#dup").style.display = "block";
-                        resolve(false);
-                    });
+                            memberPassportNum: passportNum,
+                        },
+                    })
+                        .then((res) => {
+                            console.log("then");
+                            document.querySelector("#pos").style.display = "block";
+                            resolve(true);
+                        })
+                        .catch((err) => {
+                            console.log("catch");
+                            document.querySelector("#dup").style.display = "block";
+                            resolve(false);
+                        });
                 }
             } else {
                 resolve(false);
             }
         });
-    }
-
+    };
 
     const member_hintCheck = () => {
         const memberHint = document.getElementById("member-hint").value;
@@ -623,10 +647,37 @@
             const result1 = confirm("회원가입을 완료하시겠습니까?");
 
             if (result1) {
-                document.forms['saveForm'].submit();
-                alert("행복투어의 일원이 되신걸 환영합니다.");
+                // CSRF 토큰 가져오기
+                const csrfToken = await getCsrfToken();
+
+                // 만약 CSRF 토큰을 가져오는 데 실패하면 작업을 중단합니다.
+                if (!csrfToken) {
+                    alert('CSRF 토큰을 가져오는 동안 오류가 발생했습니다');
+                    return;
+                }
+
+                // FormData 객체를 사용하여 form의 값과 함께 CSRF 토큰을 포함합니다.
+                const formData = new FormData(document.forms['saveForm']);
+                formData.append('_csrf', csrfToken);
+
+                // Fetch API를 사용하여 데이터를 전송하고 서버의 응답을 처리합니다.
+                try {
+                    const response = await fetch('/member/save', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert("행복투어의 일원이 되신걸 환영합니다.");
+                        window.location.href = '/';
+                    } else {
+                        alert(`Error ${response.status}: ${response.statusText}`);
+                    }
+                } catch (error) {
+                    console.error('잘못된 양식 제출 입니다.', error);
+                }
             } else {
-                history.back();
+                history.go();
             }
         } else {
             alert("필수사항을 만족하지 않았습니다!!");

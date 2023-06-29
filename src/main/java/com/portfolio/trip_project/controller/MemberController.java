@@ -2,9 +2,12 @@ package com.portfolio.trip_project.controller;
 
 import com.portfolio.trip_project.dto.MemberDTO;
 import com.portfolio.trip_project.service.MemberService;
+import com.portfolio.trip_project.service.UserDetailsServiceImpl;
+import com.portfolio.trip_project.util.JwtClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtClass jwtClass;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -28,27 +33,31 @@ public class MemberController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String loginForm() {
-        return "memberPages/memberLogin";
-    }
 
     @PostMapping("/login")
-    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO) {
         boolean loginResult = memberService.login(memberDTO);
-        if(loginResult) {
-            session.setAttribute("loginUserName", memberDTO.getMemberUserName());
-            return "memberPages/memberMain";
+        if (loginResult) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
+            String token = jwtClass.generateToken(userDetails);
+            return ResponseEntity.ok().body(token);
         } else {
-            return "memberPages/memberLogin";
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
+
     @PostMapping("/login/axios")
     public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
-        memberService.loginAxios(memberDTO);
-        session.setAttribute("loginUserName", memberDTO.getMemberUserName());
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean loginResult = memberService.loginAxios(memberDTO);
+        if (loginResult) {
+            session.setAttribute("loginUserName", memberDTO.getMemberUserName());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
+            String token = jwtClass.generateToken(userDetails);
+            return ResponseEntity.ok().body(token);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @RequestMapping(value = "/userName-check", method = RequestMethod.POST)

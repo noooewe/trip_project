@@ -1,20 +1,30 @@
 package com.portfolio.trip_project.util;
 
+import antlr.BaseAST;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.security.SecureRandom;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
 public class JwtClass {
-    private final String SECRET_KEY = UUID.randomUUID().toString();
+    private final String SECRET_KEY;
+
+    public JwtClass() {
+        // SecureRandom을 사용하여 64바이트 길이의 보안 키 생성
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[64];
+        secureRandom.nextBytes(keyBytes);
+        BCryptPasswordEncoder bCryptPassword = new BCryptPasswordEncoder();
+        SECRET_KEY = bCryptPassword.encode(Base64.getEncoder().encodeToString(keyBytes));
+    }
+
 
     //주어진 토큰에서 사용자 이름 추출
     public String extractUsername(String token) {

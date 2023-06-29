@@ -112,10 +112,10 @@
             }
         }).then(res => {
             console.log("res", res);
-            location.href = "/";
+            localStorage.setItem('jwtToken', res.data); // JWT 토큰을 로컬 스토리지에 저장
+            location.href = "/"; // 홈페이지로 리디렉션
         }).catch(err => {
             console.log("err", err);
-            // document.querySelector("#login-result").style.display = "block";
             document.getElementById("login-result").style.display = "block";
         });
 

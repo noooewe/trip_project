@@ -19,8 +19,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberUserName(username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        if (userName == null || userName.trim().isEmpty()) {
+            throw new UsernameNotFoundException("아이디가 비어있습니다.");
+        }
+
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberUserName(userName);
         MemberEntity memberEntity = optionalMemberEntity.orElseThrow(() -> new UsernameNotFoundException("아이디가 틀립니다."));
         return new MemberDetails(memberEntity);
     }

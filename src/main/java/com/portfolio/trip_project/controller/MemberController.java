@@ -33,6 +33,11 @@ public class MemberController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String loginForm() {
+        return "memberPages/memberLogin";
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO) {
@@ -53,6 +58,7 @@ public class MemberController {
         if (loginResult) {
             session.setAttribute("loginUserName", memberDTO.getMemberUserName());
             UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
+            System.out.println("User Details: " + userDetails); // 로그 추가
             String token = jwtClass.generateToken(userDetails);
             return ResponseEntity.ok().body(token);
         } else {

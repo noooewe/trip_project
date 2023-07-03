@@ -1,6 +1,7 @@
 package com.portfolio.trip_project.util;
 
 import antlr.BaseAST;
+import com.portfolio.trip_project.service.JwtBlacklistService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,15 +16,19 @@ import java.util.function.Function;
 @Component
 public class JwtClass {
     private final String SECRET_KEY;
+    private final JwtBlacklistService jwtBlacklistService;
 
-    public JwtClass() {
+    public JwtClass(JwtBlacklistService jwtBlacklistService) {
         // SecureRandom을 사용하여 64바이트 길이의 보안 키 생성
         SecureRandom secureRandom = new SecureRandom();
         byte[] keyBytes = new byte[64];
         secureRandom.nextBytes(keyBytes);
         BCryptPasswordEncoder bCryptPassword = new BCryptPasswordEncoder();
         SECRET_KEY = bCryptPassword.encode(Base64.getEncoder().encodeToString(keyBytes));
+
+        this.jwtBlacklistService = jwtBlacklistService;
     }
+
 
 
     //주어진 토큰에서 사용자 이름 추출
@@ -64,6 +69,8 @@ public class JwtClass {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token) && !jwtBlacklistService.isBlacklisted(token));
     }
+
+
 }

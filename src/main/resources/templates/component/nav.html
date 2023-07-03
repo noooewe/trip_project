@@ -1,34 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Title</title>
 </head>
 <body>
 <div th:fragment="nav" id="nav">
-<ul id="user-menu" class="nav justify-content-end">
-    <li id="login-item" class="nav-item">
-        <a id="login-link" class="nav-link" href="/member/login">로그인</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/member/save">회원가입</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">고객센터</a>
-    </li>
-</ul>
+    <ul id="user-menu" class="nav justify-content-end">
+        <li id="login-item" class="nav-item" th:if="${session.loginUserName == null}">
+            <a id="login-link" class="nav-link" href="/member/login">로그인</a>
+        </li>
+        <li class="nav-item" th:if="${session.loginUserName != null}">
+            <button class="nav-link" id="logout-link" onclick="logout(event)">로그아웃</button>
+        </li>
+        <li class="nav-item" th:if="${session.loginUserName == null}">
+            <a class="nav-link" href="/member/save">회원가입</a>
+        </li>
+        <li class="nav-item" th:if="${session.loginUserName != null}">
+            <a class="nav-link" href="/reservationList">예약내역 확인</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/help">고객센터</a>
+        </li>
+    </ul>
 </div>
-<script th:inline="javascript">
-    const loginItem = document.getElementById("login-item");
-    const loginEmail = [[${session.loginEmail}]];
-
-    if (loginEmail.length != 0) {
-        loginItem.innerHTML = "<a class='nav-link' href='/mypage'>" + loginEmail + "님 환영합니다!</a>" +
-            "<a class='nav-link' href='/logout'>로그아웃</a>";
-    } else {
-        loginItem.innerHTML = "<a id='login-link' class='nav-link' href='/login'>로그인</a>";
-    }
-</script>
-
 </body>
+<script>
+    function logout(event) {
+        event.preventDefault();  // add this line
+
+
+        let jwt = localStorage.getItem("jwtToken");
+
+        console.log("JWT from localStorage: ", jwt);
+
+        if (!jwt) {
+            alert("Please log in before trying to log out.");
+            return;
+        }
+
+        fetch("/member/logout", {
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwt
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log(localStorage.getItem("jwt"));
+                    localStorage.removeItem("jwt");
+                    window.location.replace("/");
+                } else {
+                    alert("Error during logout. Please try again.");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    };
+</script>
 </html>

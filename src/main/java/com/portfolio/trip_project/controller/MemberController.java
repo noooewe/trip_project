@@ -1,10 +1,13 @@
 package com.portfolio.trip_project.controller;
 
 import com.portfolio.trip_project.dto.MemberDTO;
+import com.portfolio.trip_project.service.JwtBlacklistService;
 import com.portfolio.trip_project.service.MemberService;
 import com.portfolio.trip_project.service.UserDetailsServiceImpl;
 import com.portfolio.trip_project.util.JwtClass;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +23,9 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
     private final MemberService memberService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final JwtBlacklistService jwtBlacklistService;
     private final JwtClass jwtClass;
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @GetMapping("/save")
     public String saveForm() {
@@ -45,12 +50,12 @@ public class MemberController {
         if (loginResult) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
             String token = jwtClass.generateToken(userDetails);
+            logger.info("Generated Token: {}", token); // 로그 추가
             return ResponseEntity.ok().body(token);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
-
 
     @PostMapping("/login/axios")
     public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
@@ -58,13 +63,14 @@ public class MemberController {
         if (loginResult) {
             session.setAttribute("loginUserName", memberDTO.getMemberUserName());
             UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
-            System.out.println("User Details: " + userDetails); // 로그 추가
             String token = jwtClass.generateToken(userDetails);
+            logger.info("Generated Token: {}", token); // 로그 추가
             return ResponseEntity.ok().body(token);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+
 
     @RequestMapping(value = "/userName-check", method = RequestMethod.POST)
     public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
@@ -90,5 +96,16 @@ public class MemberController {
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader(value = "Authorization", required = false) String token) {
+        if (token == null || token.isEmpty()) {
+            return new ResponseEntity<>("Authorization header is missing.", HttpStatus.UNAUTHORIZED);
+        }
+
+        String actualToken = token.replace("Bearer ", "");
+        jwtBlacklistService.addToBlacklist(actualToken);
+        return ResponseEntity.ok().build();
     }
 }

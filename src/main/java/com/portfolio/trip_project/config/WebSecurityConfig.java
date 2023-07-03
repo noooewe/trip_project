@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf() // CSRF 보호 활성화
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/member/save", "/member/login", "/member/login/axios", "/member/userName-check", "/member/passPortNum-check", "/csrf-token", "/css/**", "/js/**").permitAll()
+                .antMatchers("/", "/member/save", "/member/login", "/member/logout", "/member/login/axios", "/member/userName-check", "/member/passPortNum-check", "/csrf-token", "/css/**", "/js/**", "/favicon.ico").permitAll()
                 .antMatchers("/**").authenticated()
                 .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

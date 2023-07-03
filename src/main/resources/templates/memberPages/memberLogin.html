@@ -33,7 +33,7 @@
         </div>
         <div class="row g-2">
             <div class="col d-grid">
-                <button type="submit" id="login-button" class="btn btn-success" disabled onclick="login()">로그인</button>
+                <button type="submit" id="login-button" class="btn btn-success" disabled>로그인</button>
             </div>
         </div>
     </div>
@@ -124,8 +124,9 @@
         });
     });
 
-    const login = () => {
-        const email = document.querySelector('input[name="memberUserName"]').value;
+    const login = (event) => {
+        event.preventDefault();
+        const userName = document.querySelector('input[name="memberUserName"]').value;
         const password = document.querySelector('input[name="memberPassword"]').value;
         const csrfToken = localStorage.getItem('csrfToken');
 
@@ -133,7 +134,7 @@
             method: "post",
             url: "/member/login/axios",
             data: {
-                memberEmail: email,
+                memberUserName: userName,  // change 'memberEmail' to 'memberUserName'
                 memberPassword: password
             },
             headers: {
@@ -141,14 +142,15 @@
             }
         }).then(res => {
             console.log("res", res);
-            localStorage.setItem('jwtToken', res.data); // JWT 토큰을 로컬 스토리지에 저장
-            location.href = "/"; // 홈페이지로 리디렉션
+            localStorage.setItem('jwtToken', res.data);
+            location.href = "/";
         }).catch(err => {
             console.log("err", err);
             document.getElementById("login-result").style.display = "block";
         });
-
     }
+
+    document.getElementById("login-button").addEventListener("click", login);
 
     const rememberId = () => {
         var rememberIdCheckbox = document.getElementById("remember-id-checkbox");

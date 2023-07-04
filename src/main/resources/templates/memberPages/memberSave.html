@@ -669,6 +669,8 @@
 
                     if (response.ok) {
                         alert("행복투어의 일원이 되신걸 환영합니다.");
+                        const registerCompletedEvent = new Event('registerCompleted');
+                        document.dispatchEvent(registerCompletedEvent);
                         window.location.href = '/';
                     } else {
                         alert(`Error ${response.status}: ${response.statusText}`);

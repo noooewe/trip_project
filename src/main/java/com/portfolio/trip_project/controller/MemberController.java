@@ -1,7 +1,6 @@
 package com.portfolio.trip_project.controller;
 
 import com.portfolio.trip_project.dto.MemberDTO;
-import com.portfolio.trip_project.service.JwtBlacklistService;
 import com.portfolio.trip_project.service.MemberService;
 import com.portfolio.trip_project.service.UserDetailsServiceImpl;
 import com.portfolio.trip_project.util.JwtClass;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
     private final MemberService memberService;
     private final UserDetailsServiceImpl userDetailsService;
-    private final JwtBlacklistService jwtBlacklistService;
     private final JwtClass jwtClass;
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -103,9 +101,7 @@ public class MemberController {
         if (token == null || token.isEmpty()) {
             return new ResponseEntity<>("Authorization header is missing.", HttpStatus.UNAUTHORIZED);
         }
-
         String actualToken = token.replace("Bearer ", "");
-        jwtBlacklistService.addToBlacklist(actualToken);
         return ResponseEntity.ok().build();
     }
 }

@@ -7,7 +7,9 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -82,8 +84,12 @@ public class MemberEntity {
     @Column(length = 5, nullable = false)
     private String memberEmailMarketing;
 
-    //
-    private boolean memberBlacklisted;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardEntity> boardEntityList = new ArrayList<>();
@@ -112,8 +118,15 @@ public class MemberEntity {
         memberEntity.setMemberPassportNum(memberDTO.getMemberPassportNum());
         memberEntity.setMemberSms(memberDTO.getMemberSms());
         memberEntity.setMemberEmailMarketing(memberDTO.getMemberEmailMarketing());
-        return memberEntity;
 
+        if (memberDTO.getRoles() != null) {
+            for (String roleName : memberDTO.getRoles()) {
+                RoleEntity roleEntity = new RoleEntity();
+                roleEntity.setName(ERole.valueOf(roleName.toUpperCase()));
+                memberEntity.getRoles().add(roleEntity);
+            }
+        }
+        return memberEntity;
     }
 
 }

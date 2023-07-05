@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String adminEndpoint() {
         return "Admin"; // "Admin.html" 파일의 이름을 반환

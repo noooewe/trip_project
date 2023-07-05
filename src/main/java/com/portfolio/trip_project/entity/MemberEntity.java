@@ -87,8 +87,8 @@ public class MemberEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "member_roles",
-            joinColumns = @JoinColumn(name = "member_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<RoleEntity> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -122,7 +122,7 @@ public class MemberEntity {
         if (memberDTO.getRoles() != null) {
             for (String roleName : memberDTO.getRoles()) {
                 RoleEntity roleEntity = new RoleEntity();
-                roleEntity.setName(ERole.valueOf("ROLE_" + roleName.toUpperCase()));
+                roleEntity.setName(ERole.valueOf(roleName.toUpperCase()));
                 memberEntity.getRoles().add(roleEntity);
             }
 

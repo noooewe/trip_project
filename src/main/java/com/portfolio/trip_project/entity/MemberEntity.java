@@ -33,7 +33,7 @@ public class MemberEntity {
     @Column(length = 20, nullable = false)
     private String memberName;
 
-    @Column(length = 10, nullable = false )
+    @Column(length = 10, nullable = false)
     private String memberGender;
 
     @Column(length = 10, nullable = false)
@@ -84,7 +84,7 @@ public class MemberEntity {
     @Column(length = 5, nullable = false)
     private String memberEmailMarketing;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "member_roles",
             joinColumns = @JoinColumn(name = "member_id"),
@@ -122,11 +122,11 @@ public class MemberEntity {
         if (memberDTO.getRoles() != null) {
             for (String roleName : memberDTO.getRoles()) {
                 RoleEntity roleEntity = new RoleEntity();
-                roleEntity.setName(ERole.valueOf(roleName.toUpperCase()));
+                roleEntity.setName(ERole.valueOf("ROLE_" + roleName.toUpperCase()));
                 memberEntity.getRoles().add(roleEntity);
             }
+
         }
         return memberEntity;
     }
-
 }

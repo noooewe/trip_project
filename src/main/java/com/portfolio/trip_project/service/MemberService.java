@@ -7,11 +7,15 @@ import com.portfolio.trip_project.entity.RoleEntity;
 import com.portfolio.trip_project.repository.MemberRepository;
 import com.portfolio.trip_project.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
     public Long save(MemberDTO memberDTO) {
         memberDTO.setMemberPassword(passwordEncoder.encode(memberDTO.getMemberPassword()));
@@ -27,11 +32,21 @@ public class MemberService {
         if (memberDTO.getMemberUserName().equals("admin123")) {
             // 관리자 역할 추가
             RoleEntity adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
-            memberEntity.getRoles().add(adminRole);
+            if (adminRole == null) {
+                logger.error("ROLE_ADMIN not found.");
+            } else {
+                logger.info("ROLE_ADMIN: {}", adminRole);
+                memberEntity.getRoles().add(adminRole);
+            }
         } else {
             // 사용자 역할 추가
             RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER);
-            memberEntity.getRoles().add(userRole);
+            if (userRole == null) {
+                logger.error("ROLE_USER not found.");
+            } else {
+                logger.info("ROLE_USER: {}", userRole);
+                memberEntity.getRoles().add(userRole);
+            }
         }
 
         return memberRepository.save(memberEntity).getId();
@@ -73,4 +88,5 @@ public class MemberService {
             return false;
         }
     }
+
 }

@@ -1,9 +1,16 @@
 package com.portfolio.trip_project.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "role_table")
+@Getter
+@Setter
+@NoArgsConstructor
 public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,27 +19,7 @@ public class RoleEntity {
     @Enumerated(EnumType.STRING)
     private ERole name;
 
-    public RoleEntity() {
-
-    }
-
     public RoleEntity(ERole name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public ERole getName() {
-        return name;
-    }
-
-    public void setName(ERole name) {
         this.name = name;
     }
 }

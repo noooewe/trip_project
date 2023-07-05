@@ -1,7 +1,6 @@
 package com.portfolio.trip_project.config;
 
 import com.portfolio.trip_project.service.UserDetailsServiceImpl;
-import com.portfolio.trip_project.util.JwtClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -36,8 +35,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
-                .csrf() // CSRF 보호 활성화
+                .csrf() // CSRF 보호 비활성화
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/member/save", "/member/login", "/member/logout", "/member/login/axios", "/member/userName-check", "/member/passPortNum-check", "/csrf-token", "/css/**", "/js/**", "/favicon.ico").permitAll()
@@ -51,11 +51,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder.encode("1234")).roles("USER")
-                .and()
-                .withUser("admin123").password(passwordEncoder.encode("1234")).roles("ADMIN");
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("user").password(passwordEncoder.encode("1234")).roles("USER")
+//                .and()
+//                .withUser("admin123").password(passwordEncoder.encode("1234")).roles("ADMIN");
+//    }
 }

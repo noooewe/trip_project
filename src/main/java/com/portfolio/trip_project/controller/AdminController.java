@@ -13,7 +13,15 @@ public class AdminController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminEndpoint() {
-        return "Admin"; // "Admin.html" 파일의 이름을 반환
+    public String adminIndex() {
+        return "/adminPages/AdminIndex";
     }
+
+    @GetMapping("/adminService")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String adminServiceForm() {
+        return "/adminPages/AdminService";
+    }
+
+
 }

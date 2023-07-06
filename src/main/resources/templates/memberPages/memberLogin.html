@@ -150,7 +150,22 @@
         });
     }
 
+
     document.getElementById("login-button").addEventListener("click", login);
+
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    axios({
+        method: "get",
+        url: "/protected-endpoint",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        }
+    }).then(res => {
+        console.log("res", res);
+    }).catch(err => {
+        console.log("err", err);
+    });
 
     const rememberId = () => {
         var rememberIdCheckbox = document.getElementById("remember-id-checkbox");

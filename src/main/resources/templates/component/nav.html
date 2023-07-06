@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,8 +7,9 @@
 <body>
 <div th:fragment="nav" id="nav">
     <ul id="user-menu" class="nav justify-content-end">
-        <li class="nav-item" id="admin-page-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
-            <button class="nav-link" onclick="location.href='/admin'">관리자 페이지</button>
+<!--        <li class="nav-item" id="admin-page-item" sec:authorize="hasAuthority('ROLE_ADMIN')"> 관리자 권한 부여가 정상적으로 작동하면, 그때 주석처리 해제-->
+        <li class="nav-item" id="admin-page-item">
+        <button class="nav-link" onclick="location.href='/admin/admin'">관리자 페이지</button>
         </li>
         <li class="nav-item" id="login-item">
             <button class="nav-link" id="login-btn" onclick="location.href='/member/login'">로그인</button>
@@ -22,6 +23,7 @@
     </ul>
     <script th:inline="javascript">
         const userMenu = document.getElementById("user-menu");
+        const adminPageItem = document.getElementById("admin-page-item");
         const loginItem = document.getElementById("login-item");
         const registerItem = document.getElementById("register-item");
         const loginUserName = [[${session.loginUserName}]];
@@ -33,16 +35,25 @@
             logoutItem.className = "nav-item";
             logoutItem.innerHTML = "<button class='nav-link' onclick='logout()'>로그아웃</button>";
             userMenu.appendChild(logoutItem);
+
+            if (userName === 'admin123') {
+                adminPageItem.style.display = '';
+            } else {
+                adminPageItem.style.display = 'none';
+            }
         }
 
         const updateMenuToLoggedOutState = function() {
             loginItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/login'\">로그인</button>";
             registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/save'\">회원가입</button>";
             document.querySelector("#user-menu .nav-item:last-child").remove();
+            adminPageItem.style.display = 'none';
         }
 
         if (loginUserName) {
             updateMenuToLoggedInState(loginUserName);
+        } else {
+            adminPageItem.style.display = 'none';
         }
 
         const logout = () => {
@@ -59,6 +70,7 @@
                     localStorage.removeItem('csrfToken');
                     updateMenuToLoggedOutState();
                     // window.location.reload();
+
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -79,6 +91,7 @@
             updateMenuToLoggedOutState();
         });
     </script>
+
 </div>
 </body>
 </html>

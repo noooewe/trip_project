@@ -2,6 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="component/config :: config"></th:block>
+    <style>
+        .form-group > .row {
+            display: flex;
+            align-items: end;
+            justify-content: center;
+        }
+        .select-container {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="component/adminNav :: nav"></div>
@@ -9,41 +19,42 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="form-group">
-                <div class="row justify-content-center align-items-end mt-5 mb-5">
-                    <h2 class="text-center">항공기 등록</h2>
-                    <div class="col-md-2">
-                        <select class="form-control" name="airPlane" id="airPlaneName">
-                            <option selected>항공기</option>
-                            <option value="HT-202">HT-202</option>
-                            <option value="HT-203">HT-203</option>
-                            <option value="HT-205">HT-205</option>
-                            <option value="HT-207">HT-207</option>
-                            <option value="HT-209">HT-209</option>
-                        </select>
+                <div class="select-container">
+                    <div class="row justify-content-center align-items-start mt-5 mb-5">
+                        <h2 class="text-center">좌석 클래스 등록</h2>
+                        <div class="col-md-1 d-flex align-items-center">
+                            <select class="form-control mb-3" name="airPlane" id="airPlaneName">
+                                <option selected>항공기</option>
+                                <option value="HT-202">HT-202</option>
+                                <option value="HT-203">HT-203</option>
+                                <option value="HT-205">HT-205</option>
+                                <option value="HT-207">HT-207</option>
+                                <option value="HT-209">HT-209</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center">
+                            <select class="form-control mb-3" name="baseFare" id="basePrice">
+                                <option selected>기본 운임비</option>
+                                <option value="150000">150,000</option>
+                                <option value="170000">170,000</option>
+                                <option value="200000">200,000</option>
+                                <option value="300000">300,000</option>
+                                <option value="500000">500,000</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1 px-0">
+                            <label for="domesticCheckbox" class="mr-2">국내선</label>
+                            <input type="checkbox" id="domesticCheckbox" name="operatesDomestic" value="국내선">
+                        </div>
+                        <div class="col-md-1 px-0">
+                            <label for="internationalCheckbox" class="mr-2">국제선</label>
+                            <input type="checkbox" id="internationalCheckbox" name="operatesInternational" value="국제선">
+                        </div>
+                        <div class="col-md-3 px-0">
+                            <button class="btn btn-outline-success btn-block" onclick="addTicketProduct()">입력</button>
+                            <button class="btn btn-outline-success btn-block" onclick="retrieveTicketProducts()">조회</button>
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <select class="form-control" name="baseFare" id="basePrice">
-                            <option selected>기본 운임비</option>
-                            <option value="150000">150,000</option>
-                            <option value="170000">170,000</option>
-                            <option value="200000">200,000</option>
-                            <option value="300000">300,000</option>
-                            <option value="500000">500,000</option>
-                        </select>
-                    </div>
-                    <div class="col-md-1 px-0">
-                        <label for="domesticCheckbox" >국내선</label>
-                        <input type="checkbox" id="domesticCheckbox" name="operatesDomestic" value="국내선">
-                    </div>
-                    <div class="col-md-1 px-0">
-                        <label for="internationalCheckbox">국제선</label>
-                        <input type="checkbox" id="internationalCheckbox" name="operatesInternational" value="국제선">
-                    </div>
-                    <div class="col-md-3 px-0">
-                        <button class="btn btn-primary" onclick="addTicketProduct()">입력</button>
-                        <button class="btn btn-primary" onclick="retrieveTicketProducts()">조회</button>
-                    </div>
-                </div>
                 <div class="row justify-content-center mt-5 mb-5">
                     <h2 class="text-center">좌석 클래스 등록</h2>
                         <div class="col-md-2">
@@ -63,8 +74,8 @@
                             </select>
                         </div>
                     <div class="col-md-3 px-0">
-                        <button class="btn btn-primary" onclick="addTicketProduct()">입력</button>
-                        <button class="btn btn-primary" onclick="retrieveTicketProducts()">조회</button>
+                        <button class="btn btn-outline-success btn-block" onclick="addTicketProduct()">입력</button>
+                        <button class="btn btn-outline-success btn-block" onclick="retrieveTicketProducts()">조회</button>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-5 mb-5">
@@ -89,8 +100,8 @@
                         </select>
                     </div>
                     <div class="col-md-3 px-0">
-                        <button class="btn btn-primary" onclick="addTicketProduct()">입력</button>
-                        <button class="btn btn-primary" onclick="retrieveTicketProducts()">조회</button>
+                        <button class="btn btn-outline-success btn-block" onclick="addTicketProduct()">입력</button>
+                        <button class="btn btn-outline-success btn-block" onclick="retrieveTicketProducts()">조회</button>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-5 mb-5">
@@ -114,12 +125,13 @@
                         </select>
                     </div>
                     <div class="col-md-3 px-0">
-                        <button class="btn btn-primary" onclick="addTicketProduct()">입력</button>
-                        <button class="btn btn-primary" onclick="retrieveTicketProducts()">조회</button>
+                        <button class="btn btn-outline-success btn-block" onclick="addTicketProduct()">입력</button>
+                        <button class="btn btn-outline-success btn-block" onclick="retrieveTicketProducts()">조회</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 <div th:replace="component/footer :: footer"></div>

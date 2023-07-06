@@ -6,25 +6,28 @@
 <body>
 <div th:replace="component/adminNav :: nav"></div>
 <div id="section">
-    <table>
+    <table class="table table-striped">
+        <thead class="thead-dark">
         <tr>
             <th>id</th>
-            <th>사용자 계정</th>
-            <th>사용자 비밀번호</th>
-            <th>사용자 이름</th>
-            <th>사용자 성별</th>
-            <th>사용자 핸드폰번호</th>
-            <th>사용자 생년월일</th>
-            <th>사용자 주소</th>
-            <th>사용자 이메일</th>
-            <th>사용자 여권번호</th>
-            <th>사용자 핸드폰 SMS 동의여부</th>
-            <th>사용자 이메일 마케팅 동의여부</th>
+            <th>계정</th>
+            <th>이름</th>
+            <th>성별</th>
+            <th>핸드폰번호</th>
+            <th>생년월일</th>
+            <th>주소</th>
+            <th>이메일</th>
+            <th>여권번호</th>
+            <th>문자 SMS 동의여부</th>
+            <th>이메일 마케팅 동의여부</th>
+            <th></th>
+            <th></th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="member: ${memberList}">
             <td th:text="${member.id}"></td>
             <td th:text="${member.memberUserName}"></td>
-            <td th:text="${member.memberPassword}"></td>
             <td th:text="${member.memberName}"></td>
             <td th:text="${member.memberGender}"></td>
             <td th:text="${member.memberMobileFull}"></td>
@@ -35,18 +38,16 @@
             <td th:text="${member.memberSms}"></td>
             <td th:text="${member.memberEmailMarketing}"></td>
             <td>
-                <button th:onclick="member_detail([[${member.id}]])">조회</button>
-            </td>
-            <td>
-                <button th:onclick="member_delete([[${member.id}]])">삭제</button>
+                <button class="btn btn-outline-success btn-block" data-id="${member.id}" onclick="member_detail(this.getAttribute('data-id'))">조회</button>
+                <button class="btn btn-outline-success btn-block" data-id="${member.id}" onclick="member_delete(this.getAttribute('data-id'))">삭제</button>
             </td>
         </tr>
+        </tbody>
     </table>
     <div id="detail-area">
 
     </div>
 </div>
-
 <div th:replace="component/footer :: footer"></div>
 
 </body>

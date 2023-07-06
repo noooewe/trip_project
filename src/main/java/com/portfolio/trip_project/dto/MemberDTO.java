@@ -67,7 +67,7 @@ public class MemberDTO {
                 memberDTO.setMemberPassportNum(memberEntity.getMemberPassportNum());
                 memberDTO.setMemberSms(memberEntity.getMemberSms());
                 memberDTO.setMemberEmailMarketing(memberEntity.getMemberEmailMarketing());
-                memberDTO.setMemberMobileFull(memberEntity.getMemberCountryCode() + "-" + memberEntity.getMemberTelecom() + "-" + memberEntity.getMemberMobile());
+                memberDTO.setMemberMobileFull(memberEntity.getMemberTelecom() + "" + memberEntity.getMemberCountryCode() + "-" + memberEntity.getMemberMobile());
                 memberDTO.setMemberBirthDate(memberEntity.getMemberBirthYear() + "." +  memberEntity.getMemberBirthMonth() + "." + memberEntity.getMemberBirthDay());
                 memberDTO.setMemberEmailFull(memberEntity.getMemberEmailFront() + "@" + memberEntity.getMemberDomain());
                 memberDTO.setMemberAddressFull(memberEntity.getMemberAddress() + " " + memberEntity.getMemberDetailAddress());

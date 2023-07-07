@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .csrf() // CSRF 보호 비활성화
+                .csrf()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**", "/member/save", "/admin/admin", "/member/login", "/member/logout", "/member/login/axios", "/member/userName-check", "/member/passPortNum-check", "/csrf-token", "/css/**", "/js/**", "/favicon.ico").permitAll()

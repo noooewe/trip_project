@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -105,6 +106,25 @@ public class MemberController {
         return "memberPages/memberList";
     }
 
+    @GetMapping("/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        MemberDTO memberDTO = memberService.findById(id);
+        model.addAttribute("member", memberDTO);
+        return "memberPages/memberDetail";
+    }
+
+    @GetMapping("/axios/{id}")
+    public ResponseEntity detailAxios(@PathVariable Long id) throws Exception {
+        MemberDTO memberDTO = memberService.findById(id);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        memberService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader(value = "Authorization", required = false) String token) {
         if (token == null || token.isEmpty()) {
@@ -113,4 +133,26 @@ public class MemberController {
         String actualToken = token.replace("Bearer ", "");
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/update")
+    public String updateForm(HttpSession session, Model model) {
+        String loginUserName = (String) session.getAttribute("loginUserName");
+        MemberDTO memberDTO = memberService.findByMemberUserName(loginUserName);
+        model.addAttribute("member", memberDTO);
+        return "memberPages/memberUpdate";
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@RequestBody MemberDTO memberDTO) {
+        memberService.update(memberDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/myPage/{id}")
+    public String myPage(@PathVariable("id") Long id, Model model) {
+        MemberDTO memberDTO = memberService.myPage(id);
+        model.addAttribute("member", memberDTO);
+        return "memberPages/memberMyPage";
+    }
+
 }

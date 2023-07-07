@@ -7,9 +7,9 @@
 <body>
 <div th:fragment="nav" id="nav">
     <ul id="user-menu" class="nav justify-content-end">
-<!--        <li class="nav-item" id="admin-page-item" sec:authorize="hasAuthority('ROLE_ADMIN')"> 관리자 권한 부여가 정상적으로 작동하면, 그때 주석처리 해제-->
+        <!--        <li class="nav-item" id="admin-page-item" sec:authorize="hasAuthority('ROLE_ADMIN')"> 관리자 권한 부여가 정상적으로 작동하면, 그때 주석처리 해제-->
         <li class="nav-item" id="admin-page-item">
-        <button class="nav-link" onclick="location.href='/admin/admin'">관리자 페이지</button>
+            <button class="nav-link" onclick="location.href='/admin/admin'">관리자 페이지</button>
         </li>
         <li class="nav-item" id="login-item">
             <button class="nav-link" id="login-btn" onclick="location.href='/member/login'">로그인</button>
@@ -28,8 +28,8 @@
         const registerItem = document.getElementById("register-item");
         const loginUserName = [[${session.loginUserName}]];
 
-        const updateMenuToLoggedInState = function(userName) {
-            loginItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/mypage'\">" + userName + "님 환영합니다!</button>";
+        const updateMenuToLoggedInState = function (userName) {
+            loginItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/myPage/" + userId + "'\">" + userName + "님 환영합니다!</button>";
             registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/reservation'\">예약내역확인</button>";
             let logoutItem = document.createElement("li");
             logoutItem.className = "nav-item";
@@ -43,7 +43,7 @@
             }
         }
 
-        const updateMenuToLoggedOutState = function() {
+        const updateMenuToLoggedOutState = function () {
             loginItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/login'\">로그인</button>";
             registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/save'\">회원가입</button>";
             document.querySelector("#user-menu .nav-item:last-child").remove();
@@ -51,7 +51,7 @@
         }
 
         if (loginUserName) {
-            updateMenuToLoggedInState(loginUserName);
+            updateMenuToLoggedInState(loginUserName, loginUserId);
         } else {
             adminPageItem.style.display = 'none';
         }
@@ -78,16 +78,16 @@
         }
 
         // 로그인, 로그아웃, 회원가입 이벤트 핸들러
-        document.addEventListener('loggedIn', function(e) {
+        document.addEventListener('loggedIn', function (e) {
             updateMenuToLoggedOutState();
             window.location.href = '/';
         });
 
-        document.addEventListener('loggedOut', function() {
+        document.addEventListener('loggedOut', function () {
             updateMenuToLoggedOutState();
         });
 
-        document.addEventListener('registerCompleted', function() {
+        document.addEventListener('registerCompleted', function () {
             updateMenuToLoggedOutState();
         });
     </script>

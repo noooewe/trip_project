@@ -129,4 +129,32 @@ public class MemberEntity {
         }
         return memberEntity;
     }
+
+    public static MemberEntity toUpdateEntity(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setMemberUserName(memberDTO.getMemberUserName());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberPasswordCheck(memberDTO.getMemberPasswordCheck());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberGender(memberDTO.getMemberGender());
+        memberEntity.setMemberCountryCode(memberDTO.getMemberCountryCode());
+        memberEntity.setMemberTelecom(memberDTO.getMemberTelecom());
+        memberEntity.setMemberMobile(memberDTO.getMemberMobile());
+        memberEntity.setMemberBirthYear(memberDTO.getMemberBirthYear());
+        memberEntity.setMemberBirthMonth(memberDTO.getMemberBirthMonth());
+        memberEntity.setMemberBirthDay(memberDTO.getMemberBirthDay());
+        memberEntity.setMemberPostcode(memberDTO.getMemberPostcode());
+        memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+        memberEntity.setMemberDetailAddress(memberDTO.getMemberDetailAddress());
+        memberEntity.setMemberExtraAddress(memberDTO.getMemberExtraAddress());
+        memberEntity.setMemberEmailFront(memberDTO.getMemberEmailFront());
+        memberEntity.setMemberDomain(memberDTO.getMemberDomain());
+        memberEntity.setMemberHint(memberDTO.getMemberHint());
+        memberEntity.setMemberPassportNum(memberDTO.getMemberPassportNum());
+        memberEntity.setMemberSms(memberDTO.getMemberSms());
+        memberEntity.setMemberEmailMarketing(memberDTO.getMemberEmailMarketing());
+
+        return memberEntity;
+    }
 }

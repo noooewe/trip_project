@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
+<div th:replace="component/header :: header"></div>
+<div th:replace="component/navMember :: nav"></div>
+<div class="container">
+    <form action="/member/update" method="post">
+        <input type="hidden" name="id" th:value="${member.id}">
+        <div class="form-group">
+            <label>계정</label>
+            <input type="text" name="memberEmail" th:value="${member.memberUserName}" placeholder="계정" readonly
+                   class="form-control">
+        </div>
+        <div class="form-group">
+            <label>비밀번호</label>
+            <input type="text" name="memberPassword" placeholder="비밀번호" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="text" name="memberName" th:value="${member.memberName}" placeholder="이름"> <br>
+        </div>
+        <input type="text" name="memberMobile" th:value="${member.memberMobile}" placeholder="핸드폰 번호"> <br>
+        <div class="form-group">
+            <input type="text" name="memberMobile" th:value="${member.memberHint}" placeholder="힌트"> <br>
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-outline-success btn-block" value="수정" onclick="member_update()">
+        </div>
+    </form>
+</div>
+<div th:replace="component/footer :: footer"></div>
 
 </body>
+<script th:inline="javascript">
+    const member_update = () => {
+        const passDB = [[${member.memberPassword}]];
+        const password = document.querySelector('input[name="memberPassword"]').value;
+        const id = document.querySelector('input[name="id"]').value;
+        const userName = document.querySelector('input[name="memberUserName"]').value;
+        const name = document.querySelector('input[name="memberName"]').value;
+        const hint = document.querySelector('input[name="memberHint"]').value;
+        const mobile = document.querySelector('input[name="memberMobile"]').value;
+        if (passDB == password) {
+            axios({
+                method: "put",
+                url: "/member/" + id,
+                data: {
+                    id: id,
+                    memberEmail: userName,
+                    memberPassword: password,
+                    memberName: name,
+                    memberBirth: hint,
+                    memberMobile: mobile
+                }
+            }).then(res => {
+                location.href = "/member/" + id;
+            }).catch(err => {
+                alert("회원정보 수정 실패!");
+            })
+        } else {
+            alert("비밀번호가 일치하지 않습니다!");
+        }
+    }
+</script>
 </html>

@@ -96,5 +96,30 @@ public class MemberService {
         return memberDTOList;
     }
 
+    public MemberDTO findById(Long id) {
+        MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
+    }
+
+    public void delete(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    public MemberDTO findByMemberUserName(String loginUserName) {
+        MemberEntity memberEntity = memberRepository.findByMemberUserName(loginUserName).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
+    }
+
+    public void update(MemberDTO memberDTO) {
+        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
+        memberEntity.setMemberPassword(passwordEncoder.encode(memberDTO.getMemberPassword()));
+        memberRepository.save(memberEntity);
+    }
+
+    public MemberDTO myPage(Long id) {
+        MemberEntity memberEntity = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용사가 없습니다. id=" + id));
+        return MemberDTO.toDTO(memberEntity);
+    }
 
 }

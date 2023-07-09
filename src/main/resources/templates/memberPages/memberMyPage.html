@@ -1,47 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-<div th:replace="component/navMember :: nav"></div>
-<div class="container mt-5">
-    <form>
-        <div class="form-group">
-            <label>이름</label>
-            <input type="text" th:value="${member.memberName}" readonly class="form-control">
+<div th:replace="component/nav :: nav"></div>
+<div id="section" class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">마이 페이지</h2>
         </div>
-        <div class="form-group">
-            <label>핸드폰번호</label>
-            <input type="text" th:value="${member.memberMobileFull}" readonly class="form-control">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>계정</th>
+                    <th>이름</th>
+                    <th>성별</th>
+                    <th>핸드폰번호</th>
+                    <th>주소</th>
+                    <th>이메일</th>
+                    <th>여권번호</th>
+                    <th>문자 SMS 동의여부</th>
+                    <th>이메일 마케팅 동의여부</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${member.memberUserName}"></td>
+                    <td th:text="${member.memberName}"></td>
+                    <td th:text="${member.memberGender}"></td>
+                    <td th:text="${member.memberMobileFull}"></td>
+                    <td th:text="${member.memberAddressFull}"></td>
+                    <td th:text="${member.memberEmailFull}"></td>
+                    <td th:text="${member.memberPassportNum}"></td>
+                    <td th:text="${member.memberSms}"></td>
+                    <td th:text="${member.memberEmailMarketing}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="form-group">
-            <label>주소</label>
-            <input type="text" th:value="${member.memberAddressFull}" readonly class="form-control">
-        </div>
-        <div class="form-group">
-            <label>성별</label>
-            <input type="text" th:value="${member.memberGender}" readonly class="form-control">
-        </div>
-        <div class="form-group">
-            <label>여권번호</label>
-            <input type="text" th:value="${member.memberPassportNum}" readonly class="form-control">
-        </div>
-        <div class="form-group">
-            <label>힌트</label>
-            <input type="text" th:value="${member.memberHint}" readonly class="form-control">
-        </div>
-        <div class="form-group">
-            <label>SMS 동의 여부</label>
-            <input type="text" th:value="${member.memberSms}" readonly class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Email 마케팅 동의 여부</label>
-            <input type="text" th:value="${member.memberEmailMarketing}" readonly class="form-control">
-        </div>
-    </form>
+    </div>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>

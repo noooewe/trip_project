@@ -116,10 +116,6 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
-    public MemberDTO myPage(Long id) {
-        MemberEntity memberEntity = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용사가 없습니다. id=" + id));
-        return MemberDTO.toDTO(memberEntity);
-    }
+
 
 }

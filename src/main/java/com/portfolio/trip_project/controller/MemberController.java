@@ -148,9 +148,10 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/myPage/{id}")
-    public String myPage(@PathVariable("id") Long id, Model model) {
-        MemberDTO memberDTO = memberService.myPage(id);
+    @GetMapping("/myPage")
+    public String myPage(HttpSession session, Model model) {
+        String loginUserName = (String) session.getAttribute("loginUserName");
+        MemberDTO memberDTO = memberService.findByMemberUserName(loginUserName);
         model.addAttribute("member", memberDTO);
         return "memberPages/memberMyPage";
     }

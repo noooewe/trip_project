@@ -13,88 +13,187 @@
 <div th:replace="component/header :: header"></div>
 <div th:replace="component/nav :: nav"></div>
 <div id="section">
-    <form>
-        <div class="container">
-            <form>
-                <div class="form-row">
-                    <label for="departure">출발지:</label>
-                    <select id="departure" name="departure">
-                        <option value="seoul">서울</option>
-                        <option value="busan">부산</option>
-                        <option value="jeju">제주</option>
-                        <!-- 추가할 도시를 이곳에 넣으세요 -->
+    <div class="container my-5">
+        <h1 class="text-center mb-5">항공권 예약</h1>
+        <form>
+            <div class="row mb-3">
+                <div class="col-md-5">
+                    <label for="departure" class="form-label">출발지:</label>
+                    <select id="departure" name="departure" class="form-select">
+                        <optgroup label="Asia">
+                            <option value="ICN">인천국제공항</option>
+                            <option value="GMP">김포 공항</option>
+                            <option value="PUS">김해 공항</option>
+                            <option value="YNY">양양 공항</option>
+                            <option value="CJU">제주 공항</option>
+                            <option value="NRT">나리타 공항</option>
+                            <option value="HND">하네다 공항</option>
+                            <option value="KIX">간사이 공항</option>
+                            <option value="FKS">후쿠시마 공항</option>
+                            <option value="OKA">나하 공항</option>
+                            <option value="CTS">신치토세 공항</option>
+                            <option value="HKD">하코다테 공항</option>
+                            <option value="SGN">호치민 공항</option>
+                            <option value="HAN">하노이 공항</option>
+                            <option value="DAD">다낭 공항</option>
+                            <option value="HKT">푸켓 공항</option>
+                            <option value="MNL">마닐라 공항</option>
+                            <option value="SIN">싱가포르 창이 공항</option>
+                        </optgroup>
+                        <optgroup label="Europe">
+                            <option value="SVO">모스크바 셰레메티예보 국제공항</option>
+                            <option value="LED">상트페테르부르크 풀코보 국제공항</option>
+                            <option value="VVO">블라디보스토크 공항</option>
+                            <option value="LHR">런던 히스로 공항</option>
+                            <option value="MAN">맨체스터 공항</option>
+                            <option value="CDG">파리 샤를드골 공항</option>
+                            <option value="BER">베를린 공항</option>
+                            <option value="MAD">마드리드 공항</option>
+                            <option value="BCN">바르셀로나 공항</option>
+                            <option value="LIS">리스본 공항</option>
+                            <option value="HEL">헬싱키 공항</option>
+                        </optgroup>
+                        <optgroup label="North America">
+                            <option value="JFK">존F 케네디 공항(뉴옥)</option>
+                            <option value="DCA">워싱턴 내셔널 공항</option>
+                            <option value="SFO">센프란시스코 공항</option>
+                            <option value="SAN">샌디에이고 공항</option>
+                            <option value="MIA">마이애미 공항</option>
+                            <option value="LAX">로스엔젤레스 공항</option>
+                            <option value="YVR">벤쿠버 공항</option>
+                            <option value="YYZ">토론토 공항</option>
+                        </optgroup>
+                        <optgroup label="Oceania">
+                            <option value="SYD">시드니 공항</option>
+                            <option value="MEL">멜버른 공항</option>
+                            <option value="BNE">브리즈번 공항</option>
+                            <option value="AKL">오클랜드 공항</option>
+                        </optgroup>
                     </select>
-                    <button type="button" onclick="swapCities()">↔</button>
-                    <label for="destination">도착지:</label>
-                    <select id="destination" name="destination">
-                        <option value="seoul">서울</option>
-                        <option value="busan">부산</option>
-                        <option value="jeju">제주</option>
-                        <!-- 추가할 도시를 이곳에 넣으세요 -->
+                </div>
+                <div class="col-md-1 d-flex align-items-center justify-content-center">
+                    <button type="button" class="btn btn-outline-primary" onclick="swapCities()">↔</button>
+                </div>
+                <div class="col-md-5">
+                    <label for="destination" class="form-label">도착지:</label>
+                    <select id="destination" name="destination" class="form-select">
+                        <optgroup label="Asia">
+                            <option value="ICN">인천국제공항</option>
+                            <option value="GMP">김포 공항</option>
+                            <option value="PUS">김해 공항</option>
+                            <option value="YNY">양양 공항</option>
+                            <option value="CJU">제주 공항</option>
+                            <option value="NRT">나리타 공항</option>
+                            <option value="HND">하네다 공항</option>
+                            <option value="KIX">간사이 공항</option>
+                            <option value="FKS">후쿠시마 공항</option>
+                            <option value="OKA">나하 공항</option>
+                            <option value="CTS">신치토세 공항</option>
+                            <option value="HKD">하코다테 공항</option>
+                            <option value="SGN">호치민 공항</option>
+                            <option value="HAN">하노이 공항</option>
+                            <option value="DAD">다낭 공항</option>
+                            <option value="HKT">푸켓 공항</option>
+                            <option value="MNL">마닐라 공항</option>
+                            <option value="SIN">싱가포르 창이 공항</option>
+                        </optgroup>
+                        <optgroup label="Europe">
+                            <option value="SVO">모스크바 셰레메티예보 국제공항</option>
+                            <option value="LED">상트페테르부르크 풀코보 국제공항</option>
+                            <option value="VVO">블라디보스토크 공항</option>
+                            <option value="LHR">런던 히스로 공항</option>
+                            <option value="MAN">맨체스터 공항</option>
+                            <option value="CDG">파리 샤를드골 공항</option>
+                            <option value="BER">베를린 공항</option>
+                            <option value="MAD">마드리드 공항</option>
+                            <option value="BCN">바르셀로나 공항</option>
+                            <option value="LIS">리스본 공항</option>
+                            <option value="HEL">헬싱키 공항</option>
+                        </optgroup>
+                        <optgroup label="North America">
+                            <option value="JFK">존F 케네디 공항(뉴옥)</option>
+                            <option value="DCA">워싱턴 내셔널 공항</option>
+                            <option value="SFO">센프란시스코 공항</option>
+                            <option value="SAN">샌디에이고 공항</option>
+                            <option value="MIA">마이애미 공항</option>
+                            <option value="LAX">로스엔젤레스 공항</option>
+                            <option value="YVR">벤쿠버 공항</option>
+                            <option value="YYZ">토론토 공항</option>
+                        </optgroup>
+                        <optgroup label="Oceania">
+                            <option value="SYD">시드니 공항</option>
+                            <option value="MEL">멜버른 공항</option>
+                            <option value="BNE">브리즈번 공항</option>
+                            <option value="AKL">오클랜드 공항</option>
+                        </optgroup>
                     </select>
                 </div>
-                <div class="form-row">
-                    <label for="departure-date">출발일:</label>
-                    <input type="date" id="departure-date" name="departure-date">
-
-                    <label for="arrival-date">도착일:</label>
-                    <input type="date" id="arrival-date" name="arrival-date">
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="departure-date" class="form-label">출발일:</label>
+                    <input type="date" id="departure-date" class="form-control" name="departure-date">
                 </div>
-
-                <div class="class-and-passenger-container">
-                    <div class="passenger-container">
-                        <div class="passenger-box">
-                            <div class="class-and-passenger-container">
-                                <details open>
-                                    <summary>
-                                        <p id="passenger-count-display">성인 1명</p>
-                                    </summary>
-                                    <div class="panel">
-                                        <div class="passenger-container">
-                                            <div class="passenger-box">
-                                                <button type="button"
-                                                        onclick="changePassengerCount('adults', -1)">-</button>
-                                                <input type="number" id="adults" name="adults" value="1" min="0"
-                                                       readonly>
-                                                <button type="button"
-                                                        onclick="changePassengerCount('adults', 1)">+</button><br>
-
-                                                <button type="button"
-                                                        onclick="changePassengerCount('children', -1)">-</button>
-                                                <input type="number" id="children" name="children" value="0" min="0"
-                                                       readonly>
-                                                <button type="button"
-                                                        onclick="changePassengerCount('children', 1)">+</button><br>
-
-                                                <button type="button"
-                                                        onclick="changePassengerCount('infants', -1)">-</button>
-                                                <input type="number" id="infants" name="infants" value="0" min="0"
-                                                       readonly>
-                                                <button type="button"
-                                                        onclick="changePassengerCount('infants', 1)">+</button>
-                                            </div>
-                                        </div>
-                                        <div class="class-select">
-                                            <label for="class-select">클래스 선택:</label>
-                                            <select id="class-select" name="class-select"
-                                                    onchange="updateClassDisplay()">
-                                                <option value="economy">이코노미</option>
-                                                <option value="business">비즈니스</option>
-                                                <option value="first">퍼스트 클래스</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </details>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="col-md-6">
+                    <label for="arrival-date" class="form-label">도착일:</label>
+                    <input type="date" id="arrival-date" class="form-control" name="arrival-date">
                 </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <label for="adults" class="form-label">성인:</label>
+                    <input type="number" id="adults" class="form-control" name="adults" value="1" min="0">
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-outline-primary form-control">-</button>
+                    <button type="button" class="btn btn-outline-primary form-control">+</button>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <label for="children" class="form-label">어린이:</label>
+                    <input type="number" id="children" class="form-control" name="children" value="0" min="0">
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-outline-primary form-control">-</button>
+                    <button type="button" class="btn btn-outline-primary form-control">+</button>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-8">
+                    <label for="infants" class="form-label">유아:</label>
+                    <input type="number" id="infants" class="form-control" name="infants" value="0" min="0">
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-outline-primary form-control">-</button>
+                    <button type="button" class="btn btn-outline-primary form-control">+</button>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="class-select" class="form-label">클래스 선택:</label>
+                <select id="class-select" class="form-select" name="class-select">
+                    <option value="economy">이코노미</option>
+                    <option value="business">비즈니스</option>
+                    <option value="first">퍼스트 클래스</option>
+                </select>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </div>
+        </form>
+    </div>
 
-                <button type="submit">검색</button>
-            </form>
-        </div>
-    </form>
+    <!-- Add Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmM82AafzkK74zE3URw18j2jOnzAfDsaBVF+2AaaQbDMyfT6cz84ODBuxEKAP"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+            integrity="sha384-GLhlTgE8x53iHTC6V3mEQR1x89manubX7zd2onPtHzD7ftR1PJKUP5KBxkbtvyCH"
+            crossorigin="anonymous"></script>
+</body>
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>

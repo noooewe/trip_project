@@ -38,6 +38,12 @@
                     <td th:text="${member.memberSms}"></td>
                     <td th:text="${member.memberEmailMarketing}"></td>
                 </tr>
+                <td>
+                    <button class="btn btn-outline-success btn-block" onclick="member_update()"> 계정 수정
+                    </button>
+                    <button class="btn btn-outline-danger btn-block" th:onclick="member_delete([[${member.id}]])"> 계정 삭제
+                    </button>
+                </td>
                 </tbody>
             </table>
         </div>
@@ -45,4 +51,34 @@
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const member_update = () => {
+            axios({
+                method: "put",
+                url: "/member/update",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: {
+
+                }
+            }).then(res => {
+                alert("수정완료! myPage로 돌아갑니다.");
+                location.href = "/member/myPage";
+            }).catch(err => {
+                alert("수정실패!");
+            });
+    }
+    const member_delete = (id) => {
+        axios({
+            method: "delete",
+            url: "/member/" + id
+        }).then(res => {
+            alert("삭제완료! 확인을 클릭하면 목록으로 돌아갑니다!");
+            location.href = "/member/";
+        }).catch(err => {
+            alert("삭제실패!");
+        });
+    }
+</script>
 </html>

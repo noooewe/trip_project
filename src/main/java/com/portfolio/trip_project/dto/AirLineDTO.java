@@ -10,6 +10,7 @@ import lombok.ToString;
 public class AirLineDTO {
 
     private Long id;
+    private String IATACode;             //IATACode
     private String airPlane;             //항공기 이름
     private int baseFare;                //기본 요금
     private String operatesDomestic;       //국내 노선 운영 여부

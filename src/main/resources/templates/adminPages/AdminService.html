@@ -21,6 +21,64 @@
             <div class="form-group">
                 <div class="select-container">
                     <div class="row justify-content-center align-items-start mt-5 mb-5">
+                        <h2 class="text-center">IATA 운항코드 관리</h2>
+                        <div class="col-md-2">
+                            <select class="form-control mb-3" name="IATACode" id="IATA_Code">
+                                <optgroup label="Asia">
+                                    <option value="ICN">인천국제공항</option>
+                                    <option value="GMP">김포 공항</option>
+                                    <option value="PUS">김해 공항</option>
+                                    <option value="YNY">양양 공항</option>
+                                    <option value="CJU">제주 공항</option>
+                                    <option value="NRT">나리타 공항</option>
+                                    <option value="HND">하네다 공항</option>
+                                    <option value="KIX">간사이 공항</option>
+                                    <option value="FKS">후쿠시마 공항</option>
+                                    <option value="OKA">나하 공항</option>
+                                    <option value="CTS">신치토세 공항</option>
+                                    <option value="HKD">하코다테 공항</option>
+                                    <option value="SGN">호치민 공항</option>
+                                    <option value="HAN">하노이 공항</option>
+                                    <option value="DAD">다낭 공항</option>
+                                    <option value="HKT">푸켓 공항</option>
+                                    <option value="MNL">마닐라 공항</option>
+                                    <option value="SIN">싱가포르 창이 공항</option>
+                                </optgroup>
+                                <optgroup label="Europe">
+                                    <option value="SVO">모스크바 셰레메티예보 국제공항</option>
+                                    <option value="LED">상트페테르부르크 풀코보 국제공항</option>
+                                    <option value="VVO">블라디보스토크 공항</option>
+                                    <option value="LHR">런던 히스로 공항</option>
+                                    <option value="MAN">맨체스터 공항</option>
+                                    <option value="CDG">파리 샤를드골 공항</option>
+                                    <option value="BER">베를린 공항</option>
+                                    <option value="MAD">마드리드 공항</option>
+                                    <option value="BCN">바르셀로나 공항</option>
+                                    <option value="LIS">리스본 공항</option>
+                                    <option value="HEL">헬싱키 공항</option>
+                                </optgroup>
+                                <optgroup label="North America">
+                                    <option value="JFK">존F 케네디 공항(뉴옥)</option>
+                                    <option value="DCA">워싱턴 내셔널 공항</option>
+                                    <option value="SFO">센프란시스코 공항</option>
+                                    <option value="SAN">샌디에이고 공항</option>
+                                    <option value="MIA">마이애미 공항</option>
+                                    <option value="LAX">로스엔젤레스 공항</option>
+                                    <option value="YVR">벤쿠버 공항</option>
+                                    <option value="YYZ">토론토 공항</option>
+                                </optgroup>
+                                <optgroup label="Oceania">
+                                    <option value="SYD">시드니 공항</option>
+                                    <option value="MEL">멜버른 공항</option>
+                                    <option value="BNE">브리즈번 공항</option>
+                                    <option value="AKL">오클랜드 공항</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-3 px-0">
+                            <button class="btn btn-outline-success btn-block" onclick="addTicketProduct()">입력</button>
+                            <button class="btn btn-outline-success btn-block" onclick="retrieveTicketProducts()">조회</button>
+                        </div>
                         <h2 class="text-center">좌석 클래스 등록</h2>
                         <div class="col-md-1 d-flex align-items-center">
                             <select class="form-control mb-3" name="airPlane" id="airPlaneName">

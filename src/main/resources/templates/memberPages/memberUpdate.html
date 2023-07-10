@@ -5,7 +5,7 @@
 </head>
 <body>
 <div th:replace="component/header :: header"></div>
-<div th:replace="component/navMember :: nav"></div>
+<div th:replace="component/nav :: nav"></div>
 <div class="container">
     <form action="/member/update" method="post">
         <input type="hidden" name="id" th:value="${member.id}">

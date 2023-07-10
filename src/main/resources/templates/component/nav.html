@@ -6,9 +6,11 @@
 <body>
 <div th:fragment="nav" id="nav">
     <ul id="user-menu" class="nav justify-content-end">
+        <!--        <div sec:authorize="hasRole('ROLE_ADMIN')">-->
         <li class="nav-item" id="admin-page-item">
             <button class="nav-link" onclick="location.href='/admin/admin'">관리자 페이지</button>
         </li>
+<!--        </div>-->
         <li class="nav-item" id="login-item">
             <button class="nav-link" id="login-btn" onclick="location.href='/member/login'">로그인</button>
         </li>

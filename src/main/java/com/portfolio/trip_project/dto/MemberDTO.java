@@ -23,9 +23,9 @@ public class MemberDTO {
         private String memberTelecom; //사용자 통신사
         private String memberMobile;   //사용자 핸드폰번호
         private String memberMobileFull;  //사용자 전체 핸드폰번호
-        private int memberBirthYear;   //사용자 생일(년)
-        private int memberBirthMonth;  //시용자 생일(월)
-        private int memberBirthDay;    //사용자 생일(일)
+        private String memberBirthYear;   //사용자 생일(년)
+        private String memberBirthMonth;  //시용자 생일(월)
+        private String memberBirthDay;    //사용자 생일(일)
         private String memberBirthDate; //사용자 생년월일
         private String memberPostcode; //사용자 우편번호
         private String memberAddress;   //사용자 주소

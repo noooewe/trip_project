@@ -46,13 +46,13 @@ public class MemberEntity {
     private String memberMobile;
 
     @Column(nullable = false)
-    private int memberBirthYear;
+    private String memberBirthYear;
 
     @Column(nullable = false)
-    private int memberBirthMonth;
+    private String memberBirthMonth;
 
     @Column(nullable = false)
-    private int memberBirthDay;
+    private String memberBirthDay;
 
     @Column(length = 10, nullable = false)
     private String memberPostcode;

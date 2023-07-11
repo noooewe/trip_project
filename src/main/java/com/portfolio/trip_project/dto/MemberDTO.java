@@ -41,7 +41,6 @@ public class MemberDTO {
         private String memberEmailMarketing;
         private List<PassengerDTO> passengers; //추가 탑승객 정보
         private int mileage;           //사용자 마일리지
-        private Set<String> roles;
 
         public static MemberDTO toDTO(MemberEntity memberEntity) {
                 MemberDTO memberDTO = new MemberDTO();

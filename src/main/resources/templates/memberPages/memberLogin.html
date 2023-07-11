@@ -118,11 +118,6 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        axios.get('/csrf-token').then(response => {
-            localStorage.setItem('csrfToken', response.data.csrfToken);
-        });
-    });
 
     const login = (event) => {
         event.preventDefault();
@@ -137,12 +132,9 @@
                 memberUserName: userName,  // change 'memberEmail' to 'memberUserName'
                 memberPassword: password
             },
-            headers: {
-                "X-CSRF-TOKEN": csrfToken
-            }
+
         }).then(res => {
             console.log("res", res);
-            localStorage.setItem('jwtToken', res.data);
             location.href = "/";
         }).catch(err => {
             console.log("err", err);

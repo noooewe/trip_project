@@ -84,13 +84,6 @@ public class MemberEntity {
     @Column(length = 5, nullable = false)
     private String memberEmailMarketing;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "member_roles",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "member_id"))
-    private Set<RoleEntity> roles = new HashSet<>();
-
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardEntity> boardEntityList = new ArrayList<>();
 
@@ -119,14 +112,6 @@ public class MemberEntity {
         memberEntity.setMemberSms(memberDTO.getMemberSms());
         memberEntity.setMemberEmailMarketing(memberDTO.getMemberEmailMarketing());
 
-        if (memberDTO.getRoles() != null) {
-            for (String roleName : memberDTO.getRoles()) {
-                RoleEntity roleEntity = new RoleEntity();
-                roleEntity.setName(ERole.valueOf(roleName.toUpperCase()));
-                memberEntity.getRoles().add(roleEntity);
-            }
-
-        }
         return memberEntity;
     }
 

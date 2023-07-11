@@ -2,21 +2,17 @@ package com.portfolio.trip_project.controller;
 
 import com.portfolio.trip_project.dto.MemberDTO;
 import com.portfolio.trip_project.service.MemberService;
-import com.portfolio.trip_project.service.UserDetailsServiceImpl;
-import com.portfolio.trip_project.util.JwtClass;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Controller
@@ -24,8 +20,6 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    private final UserDetailsServiceImpl userDetailsService;
-    private final JwtClass jwtClass;
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @GetMapping("/save")
@@ -46,38 +40,27 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public ResponseEntity memberLogin(@RequestBody MemberDTO memberDTO) {
+    public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
-            String token = jwtClass.generateToken(userDetails);
-            logger.info("Generated Token: {}", token); // 로그 추가
-            return ResponseEntity.ok().body(token);
+            session.setAttribute("loginEmail", memberDTO.getMemberUserName());
+            return "memberPages/memberMain";
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return "memberPages/memberLogin";
         }
     }
 
     @PostMapping("/login/axios")
     public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
-        boolean loginResult = memberService.loginAxios(memberDTO);
-        if (loginResult) {
-            session.setAttribute("loginUserName", memberDTO.getMemberUserName());
-            UserDetails userDetails = userDetailsService.loadUserByUsername(memberDTO.getMemberUserName());
-            String token = jwtClass.generateToken(userDetails);
-            logger.info("Generated Token: {}", token); // 로그 추가
-            return ResponseEntity.ok().body(token);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        memberService.loginAxios(memberDTO);
+        session.setAttribute("loginEmail", memberDTO.getMemberUserName());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/userName-check", method = RequestMethod.POST)
-    public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
-        String csrfToken = request.getHeader("X-CSRF-TOKEN");
-        System.out.println("CSRF Token: " + csrfToken);
 
+    @PostMapping("/userName-check")
+    public ResponseEntity userNameCheck(@RequestBody MemberDTO memberDTO) {
         boolean result = memberService.userNameCheck(memberDTO.getMemberUserName());
         if (result) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -85,12 +68,8 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
-
-    @RequestMapping(value = "/passPortNum-check", method = RequestMethod.POST)
-    public ResponseEntity passPortNumCheck(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
-        String csrfToken = request.getHeader("X-CSRF-TOKEN");
-        System.out.println("CSRF Token: " + csrfToken);
-
+    @RequestMapping(value = "/passPortNum-check")
+    public ResponseEntity passPortNumCheck(@RequestBody MemberDTO memberDTO) {
         boolean result = memberService.passPortNumCheck(memberDTO.getMemberPassportNum());
         if (result) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -125,13 +104,10 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader(value = "Authorization", required = false) String token) {
-        if (token == null || token.isEmpty()) {
-            return new ResponseEntity<>("Authorization header is missing.", HttpStatus.UNAUTHORIZED);
-        }
-        String actualToken = token.replace("Bearer ", "");
-        return ResponseEntity.ok().build();
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 
     @GetMapping("/update")

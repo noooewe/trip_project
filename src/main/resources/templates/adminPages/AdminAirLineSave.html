@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="component/config :: config"></th:block>
+    <style>
+        .form-group > .row {
+            display: flex;
+            align-items: end;
+            justify-content: center;
+        }
+
+        .select-container {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="component/adminNav :: nav"></div>
+<div id="section" class="container mt-3">
+    <form action="/airline/save" name="saveForm" method="post">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="select-container">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">IATA 운항코드 관리</h2>
+                                <div class="row justify-content-center align-items-start mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <select class="form-control mb-3" name="departureAirport"
+                                                id="departure_Airport">
+                                            <option selected>출발 공항</option>
+                                            <optgroup label="Asia">
+                                                <option value="ICN">인천국제공항</option>
+                                                <option value="GMP">김포 공항</option>
+                                                <option value="PUS">김해 공항</option>
+                                                <option value="YNY">양양 공항</option>
+                                                <option value="CJU">제주 공항</option>
+                                                <option value="NRT">나리타 공항</option>
+                                                <option value="HND">하네다 공항</option>
+                                                <option value="KIX">간사이 공항</option>
+                                                <option value="FKS">후쿠시마 공항</option>
+                                                <option value="OKA">나하 공항</option>
+                                                <option value="CTS">신치토세 공항</option>
+                                                <option value="HKD">하코다테 공항</option>
+                                                <option value="SGN">호치민 공항</option>
+                                                <option value="HAN">하노이 공항</option>
+                                                <option value="DAD">다낭 공항</option>
+                                                <option value="HKT">푸켓 공항</option>
+                                                <option value="MNL">마닐라 공항</option>
+                                                <option value="SIN">싱가포르 창이 공항</option>
+                                            </optgroup>
+                                            <optgroup label="Europe">
+                                                <option value="SVO">모스크바 셰레메티예보 국제공항</option>
+                                                <option value="LED">상트페테르부르크 풀코보 국제공항</option>
+                                                <option value="VVO">블라디보스토크 공항</option>
+                                                <option value="LHR">런던 히스로 공항</option>
+                                                <option value="MAN">맨체스터 공항</option>
+                                                <option value="CDG">파리 샤를드골 공항</option>
+                                                <option value="BER">베를린 공항</option>
+                                                <option value="MAD">마드리드 공항</option>
+                                                <option value="BCN">바르셀로나 공항</option>
+                                                <option value="LIS">리스본 공항</option>
+                                                <option value="HEL">헬싱키 공항</option>
+                                            </optgroup>
+                                            <optgroup label="North America">
+                                                <option value="JFK">존F 케네디 공항(뉴옥)</option>
+                                                <option value="DCA">워싱턴 내셔널 공항</option>
+                                                <option value="SFO">센프란시스코 공항</option>
+                                                <option value="SAN">샌디에이고 공항</option>
+                                                <option value="MIA">마이애미 공항</option>
+                                                <option value="LAX">로스엔젤레스 공항</option>
+                                                <option value="YVR">벤쿠버 공항</option>
+                                                <option value="YYZ">토론토 공항</option>
+                                            </optgroup>
+                                            <optgroup label="Oceania">
+                                                <option value="SYD">시드니 공항</option>
+                                                <option value="MEL">멜버른 공항</option>
+                                                <option value="BNE">브리즈번 공항</option>
+                                                <option value="AKL">오클랜드 공항</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control mb-3" name="arrivalAirport" id="arrival_Airport">
+                                            <option selected>도착 공항</option>
+                                            <optgroup label="Asia">
+                                                <option value="ICN">인천국제공항</option>
+                                                <option value="GMP">김포 공항</option>
+                                                <option value="PUS">김해 공항</option>
+                                                <option value="YNY">양양 공항</option>
+                                                <option value="CJU">제주 공항</option>
+                                                <option value="NRT">나리타 공항</option>
+                                                <option value="HND">하네다 공항</option>
+                                                <option value="KIX">간사이 공항</option>
+                                                <option value="FKS">후쿠시마 공항</option>
+                                                <option value="OKA">나하 공항</option>
+                                                <option value="CTS">신치토세 공항</option>
+                                                <option value="HKD">하코다테 공항</option>
+                                                <option value="SGN">호치민 공항</option>
+                                                <option value="HAN">하노이 공항</option>
+                                                <option value="DAD">다낭 공항</option>
+                                                <option value="HKT">푸켓 공항</option>
+                                                <option value="MNL">마닐라 공항</option>
+                                                <option value="SIN">싱가포르 창이 공항</option>
+                                            </optgroup>
+                                            <optgroup label="Europe">
+                                                <option value="SVO">모스크바 셰레메티예보 국제공항</option>
+                                                <option value="LED">상트페테르부르크 풀코보 국제공항</option>
+                                                <option value="VVO">블라디보스토크 공항</option>
+                                                <option value="LHR">런던 히스로 공항</option>
+                                                <option value="MAN">맨체스터 공항</option>
+                                                <option value="CDG">파리 샤를드골 공항</option>
+                                                <option value="BER">베를린 공항</option>
+                                                <option value="MAD">마드리드 공항</option>
+                                                <option value="BCN">바르셀로나 공항</option>
+                                                <option value="LIS">리스본 공항</option>
+                                                <option value="HEL">헬싱키 공항</option>
+                                            </optgroup>
+                                            <optgroup label="North America">
+                                                <option value="JFK">존F 케네디 공항(뉴옥)</option>
+                                                <option value="DCA">워싱턴 내셔널 공항</option>
+                                                <option value="SFO">센프란시스코 공항</option>
+                                                <option value="SAN">샌디에이고 공항</option>
+                                                <option value="MIA">마이애미 공항</option>
+                                                <option value="LAX">로스엔젤레스 공항</option>
+                                                <option value="YVR">벤쿠버 공항</option>
+                                                <option value="YYZ">토론토 공항</option>
+                                            </optgroup>
+                                            <optgroup label="Oceania">
+                                                <option value="SYD">시드니 공항</option>
+                                                <option value="MEL">멜버른 공항</option>
+                                                <option value="BNE">브리즈번 공항</option>
+                                                <option value="AKL">오클랜드 공항</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">좌석 클래스 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-1 d-flex align-items-center">
+                                        <select class="form-control mb-3" name="airPlane" id="airPlaneName">
+                                            <option selected>항공기</option>
+                                            <option value="HT-202">HT-202(아시아 노선)</option>
+                                            <option value="HT-203">HT-203(아시아 노선)</option>
+                                            <option value="HT-207">HT-205(아시아/오세아니아 노선)</option>
+                                            <option value="HT-208">HT-207(아시아/유럽 노선)</option>
+                                            <option value="HT-209">HT-209(아시아/북미 노선)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-center">
+                                        <select class="form-control mb-3" name="baseFare" id="basePrice">
+                                            <option selected>기본 운임비</option>
+                                            <option value="150000">150,000</option>
+                                            <option value="170000">170,000</option>
+                                            <option value="200000">200,000</option>
+                                            <option value="300000">300,000</option>
+                                            <option value="500000">300,000</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1 px-0">
+                                        <label for="domesticCheckbox" class="mr-2">국내선</label>
+                                        <input type="checkbox" id="domesticCheckbox" name="operatesDomestic"
+                                               value="국내선">
+                                    </div>
+                                    <div class="col-md-1 px-0">
+                                        <label for="internationalCheckbox" class="mr-2">국제선</label>
+                                        <input type="checkbox" id="internationalCheckbox" name="operatesInternational"
+                                               value="국제선">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">좌석 클래스 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="seatPositionClass" id="seatClass">
+                                            <option selected>Class</option>
+                                            <option value="economy">이코노미</option>
+                                            <option value="business">비지니스</option>
+                                            <option value="first">퍼스트</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="seatPositionClassPrice" id="seatPrice">
+                                            <option selected>Class 가격</option>
+                                            <option value="50000">50,000</option>
+                                            <option value="150000">150,000</option>
+                                            <option value="300000">300,000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">기내식 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="airlineMealType" id="mealType">
+                                            <option selected>기내식</option>
+                                            <option value="hamCheeseSandwich">햄치즈 샌드위치</option>
+                                            <option value="bibimbap">비빔밥</option>
+                                            <option value="kimchiFriedRice">김치 볶음밥</option>
+                                            <option value="chickenRice">닭고기 덮밥</option>
+                                            <option value="steak">스테이크</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="airlineMealPrice" id="mealPrice">
+                                            <option selected>기내식 가격</option>
+                                            <option value="3000">3,000</option>
+                                            <option value="6000">6,000</option>
+                                            <option value="8000">8,000</option>
+                                            <option value="20000">20,000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">수화물 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="baggageWeight" id="weightSelect">
+                                            <option selected>수화물</option>
+                                            <option value="15kg">15kg</option>
+                                            <option value="18kg">18kg</option>
+                                            <option value="22kg">22kg</option>
+                                            <option value="25kg">25kg</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select class="form-control" name="baggageWeightPrice" id="weightPrice">
+                                            <option selected>수화물 가격</option>
+                                            <option value="0">0</option>
+                                            <option value="15000">15,000</option>
+                                            <option value="25000">25,000</option>
+                                            <option value="40000">40,000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-5 mb-5">
+                            <div class="col-md-3 px-0 d-flex flex-column align-items-center">
+                                <input type="submit" class="btn btn-outline-success btn-lg my-2" value="입력">
+                                <button class="btn btn-outline-success btn-lg my-2" style="width: 50%;"
+                                        onclick="retrieveTicketProducts()">조회
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:replace="component/footer :: footer"></div>
+</body>
+</html>

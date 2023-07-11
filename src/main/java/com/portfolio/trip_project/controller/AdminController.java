@@ -1,7 +1,6 @@
 package com.portfolio.trip_project.controller;
 
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String adminIndex() {
         return "/adminPages/AdminIndex";
-    }
-
-    @GetMapping("/adminService")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String adminServiceForm() {
-        return "/adminPages/AdminService";
     }
 
 

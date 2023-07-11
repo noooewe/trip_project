@@ -35,10 +35,10 @@ public class MemberService {
 
     public void loginAxios(MemberDTO memberDTO) {
         MemberEntity memberEntity = memberRepository.findByMemberUserName(memberDTO.getMemberUserName())
-                .orElseThrow(() -> new NoSuchElementException("이메일 또는 비밀번호가 틀립니다"));
+                .orElseThrow(() -> new NoSuchElementException("계정 또는 비밀번호가 틀립니다"));
 
         if (!passwordEncoder.matches(memberDTO.getMemberPassword(), memberEntity.getMemberPassword())) {
-            throw new NoSuchElementException("이메일 또는 비밀번호가 틀립니다");
+            throw new NoSuchElementException("계정 또는 비밀번호가 틀립니다");
         }
     }
     public boolean userNameCheck(String memberUserName) {

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
-    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @GetMapping("/save")
     public String saveForm() {
@@ -43,8 +41,8 @@ public class MemberController {
     public String memberLogin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
-            session.setAttribute("loginEmail", memberDTO.getMemberUserName());
-            return "memberPages/memberMain";
+            session.setAttribute("loginUserName", memberDTO.getMemberUserName());
+            return "redirect:/";
         } else {
             return "memberPages/memberLogin";
         }
@@ -53,7 +51,7 @@ public class MemberController {
     @PostMapping("/login/axios")
     public ResponseEntity memberLoginAxios(@RequestBody MemberDTO memberDTO, HttpSession session) throws Exception {
         memberService.loginAxios(memberDTO);
-        session.setAttribute("loginEmail", memberDTO.getMemberUserName());
+        session.setAttribute("loginUserName", memberDTO.getMemberUserName());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -93,7 +91,7 @@ public class MemberController {
     }
 
     @GetMapping("/axios/{id}")
-    public ResponseEntity detailAxios(@PathVariable Long id) throws Exception {
+    public ResponseEntity detailAxios(@PathVariable Long id) {
         MemberDTO memberDTO = memberService.findById(id);
         return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }

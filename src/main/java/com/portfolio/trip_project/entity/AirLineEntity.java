@@ -30,10 +30,10 @@ public class AirLineEntity {
     @Column
     private int baseFare;
 
-    @Column(length = 5, nullable = false)
+    @Column(length = 5)
     private String operatesDomestic;
 
-    @Column(length = 5, nullable = false)
+    @Column(length = 5)
     private String operatesInternational;
 
     @Column(length = 10, nullable = false)

@@ -2,15 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title></head>
+    <title>Title</title>
+</head>
 <body>
 <div th:fragment="nav" id="nav">
     <ul id="user-menu" class="nav justify-content-end">
-        <!--        <div sec:authorize="hasRole('ROLE_ADMIN')">-->
         <li class="nav-item" id="admin-page-item">
             <button class="nav-link" onclick="location.href='/admin/admin'">관리자 페이지</button>
         </li>
-<!--        </div>-->
         <li class="nav-item" id="login-item">
             <button class="nav-link" id="login-btn" onclick="location.href='/member/login'">로그인</button>
         </li>
@@ -21,78 +20,60 @@
             <button class="nav-link" onclick="location.href='/help'">고객센터</button>
         </li>
     </ul>
-    <script th:inline="javascript"> const userMenu = document.getElementById("user-menu");
+    <script th:inline="javascript">
+        const userMenu = document.getElementById("user-menu");
+        const adminPageItem = document.getElementById("admin-page-item");
+        const loginItem = document.getElementById("login-item");
+        const registerItem = document.getElementById("register-item");
+        const loginUserName = [[${session.loginUserName}]];
 
-    const adminPageItem = document.getElementById("admin-page-item");
-    const loginItem = document.getElementById("login-item");
-    const registerItem = document.getElementById("register-item");
-    const loginUserName = [[${session.loginUserName}]];
-    const updateMenuToLoggedInState = function (userName) {
+        const updateMenuToLoggedInState = function (userName) {
+            loginItem.innerHTML = `<button class='nav-link' onclick="location.href='/member/myPage'">${userName}님 환영합니다!</button>`;
+            registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/reservation'\">예약내역확인</button>";
+            let logoutItem = document.createElement("li");
+            logoutItem.className = "nav-item";
+            logoutItem.innerHTML = "<button class='nav-link' onclick='logout()'>로그아웃</button>";
+            userMenu.appendChild(logoutItem);
 
-        loginItem.innerHTML = `<button class='nav-link' onclick="location.href='/member/myPage'">${userName}님 환영합니다!</button>`;
-        registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/reservation'\">예약내역확인</button>";
-        let logoutItem = document.createElement("li");
-        logoutItem.className = "nav-item";
-        logoutItem.innerHTML = "<button class='nav-link' onclick='logout()'>로그아웃</button>";
-        userMenu.appendChild(logoutItem);
+            if (userName === 'admin123') {
+                adminPageItem.style.display = '';
+            } else {
+                adminPageItem.style.display = 'none';
+            }
+        }
 
-        if (userName === 'admin123') {
-            adminPageItem.style.display = '';
+
+        const updateMenuToLoggedOutState = function () {
+            loginItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/login'\">로그인</button>";
+            registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/save'\">회원가입</button>";
+            document.querySelector("#user-menu .nav-item:last-child").remove();
+            adminPageItem.style.display = 'none';
+        }
+
+        if (loginUserName) {
+            updateMenuToLoggedInState(loginUserName);
         } else {
             adminPageItem.style.display = 'none';
         }
-    }
 
 
-    const updateMenuToLoggedOutState = function () {
-        loginItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/login'\">로그인</button>";
-        registerItem.innerHTML = "<button class='nav-link' onclick=\"location.href='/member/save'\">회원가입</button>";
-        document.querySelector("#user-menu .nav-item:last-child").remove();
-        adminPageItem.style.display = 'none';
-    }
+        const logout = () => {
+            window.location.href = '/member/logout';
+        }
 
-    if (loginUserName) {
-        updateMenuToLoggedInState(loginUserName);
-    } else {
-        adminPageItem.style.display = 'none';
-    }
+        // 로그인, 로그아웃, 회원가입 이벤트 핸들러
+        document.addEventListener('loggedIn', function (e) {
+            updateMenuToLoggedOutState();
+            window.location.href = '/';
+        });
 
+        document.addEventListener('loggedOut', function () {
+            updateMenuToLoggedOutState();
+        });
 
-
-    const logout = () => {
-        let jwtToken = localStorage.getItem('jwtToken');
-        let csrfToken = localStorage.getItem('csrfToken');
-        axios.post('/member/logout', {}, {
-            headers: {
-                "Authorization": `Bearer ${jwtToken}`,
-                "X-CSRF-TOKEN": csrfToken
-            }
-        })
-            .then(function (response) {
-                // handle success
-                localStorage.removeItem('jwtToken');
-                localStorage.removeItem('csrfToken');
-                updateMenuToLoggedOutState();
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    // 로그인, 로그아웃, 회원가입 이벤트 핸들러
-    document.addEventListener('loggedIn', function (e) {
-        updateMenuToLoggedOutState();
-        window.location.href = '/';
-    });
-
-    document.addEventListener('loggedOut', function () {
-        updateMenuToLoggedOutState();
-    });
-
-    document.addEventListener('registerCompleted', function () {
-        updateMenuToLoggedOutState();
-    });
+        document.addEventListener('registerCompleted', function () {
+            updateMenuToLoggedOutState();
+        });
     </script>
 </div>
 </body>

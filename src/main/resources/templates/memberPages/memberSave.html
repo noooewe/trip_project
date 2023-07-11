@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="section">
-<div id="save_form" class="container">
+<div id="saveForm" class="container">
     <li class="nav-item">
         <a class="nav-link" href="/" style="display: inline-block;">
             <button class="btn" style="border: none;"><i class="bi bi-caret-left-fill">홈페이지로 돌아가기</i></button>
@@ -606,29 +606,37 @@
             return true;
         }
     }
+
+    saveForm.addEventListener('submit', async function (event) {
+        const result = await login_check();
+        if (!result) {
+            event.preventDefault(); // 폼 제출을 차단하고,
+            alert("필수사항을 입력하지 않았습니다!!"); // 알림을 보냅니다.
+        }
+    });
+
     const join_click = async () => {
-        const result = await login_check(); // here we wait until login_check is done
-        if (result) {
-            const result1 = confirm("회원가입을 완료하시겠습니까?");
-            if (result1) {
-                const formData = new FormData(saveForm);
-                // 회원가입 요청
-                axios.post('/member/save', formData)
-                    .then(function (response) {
-                        console.log(response);
-                        alert("행복투어의 일원이 되신걸 환영합니다.");
-                        // 페이지를 index("/")로 리다이렉트
-                        window.location.href = "/";
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                        alert("회원가입에 실패했습니다!");
-                    });
-            } else {
-                history.back();
-            }
+        const result = await login_check();
+        if (!result) {
+            return;
+        }
+        const result1 = confirm("회원가입을 완료하시겠습니까?");
+        if (result1) {
+            const formData = new FormData(saveForm);
+            // 회원가입 요청
+            axios.post('/member/save', formData)
+                .then(function (response) {
+                    console.log(response);
+                    alert("행복투어의 일원이 되신걸 환영합니다.");
+                    // 페이지를 index("/")로 리다이렉트
+                    window.location.href = "/";
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert("회원가입에 실패했습니다!");
+                });
         } else {
-            alert("필수사항을 입력하지 않았습니다!!");
+            history.back();
         }
     }
 </script>

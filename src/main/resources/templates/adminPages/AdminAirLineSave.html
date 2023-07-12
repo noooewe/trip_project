@@ -154,12 +154,12 @@
                                     </div>
                                     <div class="col-md-2 d-flex align-items-center">
                                         <select class="form-control mb-3" name="baseFare" id="basePrice">
-                                            <option selected>기본 운임비</option>
-                                            <option value="150000">150,000</option>
-                                            <option value="170000">170,000</option>
-                                            <option value="200000">200,000</option>
-                                            <option value="300000">300,000</option>
-                                            <option value="500000">300,000</option>
+                                            <option value=0 selected>기본 운임비</option>
+                                            <option value=150000>150,000</option>
+                                            <option value=170000>170,000</option>
+                                            <option value=200000>200,000</option>
+                                            <option value=300000>300,000</option>
+                                            <option value=500000>300,000</option>
                                         </select>
                                     </div>
                                     <div class="col-md-1 px-0">
@@ -190,10 +190,10 @@
 
                                     <div class="col-md-2">
                                         <select class="form-control" name="seatPositionClassPrice" id="seatPrice">
-                                            <option selected>Class 가격</option>
-                                            <option value="50000">50,000</option>
-                                            <option value="150000">150,000</option>
-                                            <option value="300000">300,000</option>
+                                            <option value=0 selected>Class 가격</option>
+                                            <option value=50000>50,000</option>
+                                            <option value=150000>150,000</option>
+                                            <option value=300000>300,000</option>
                                         </select>
                                     </div>
                                 </div>
@@ -215,11 +215,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <select class="form-control" name="airlineMealPrice" id="mealPrice">
-                                            <option selected>기내식 가격</option>
-                                            <option value="3000">3,000</option>
-                                            <option value="6000">6,000</option>
-                                            <option value="8000">8,000</option>
-                                            <option value="20000">20,000</option>
+                                            <option value=0 selected>기내식 가격</option>
+                                            <option value=3000>3,000</option>
+                                            <option value=6000>6,000</option>
+                                            <option value=8000>8,000</option>
+                                            <option value=20000>20,000</option>
                                         </select>
                                     </div>
                                 </div>
@@ -240,11 +240,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <select class="form-control" name="baggageWeightPrice" id="weightPrice">
-                                            <option selected>수화물 가격</option>
-                                            <option value="0">0</option>
-                                            <option value="15000">15,000</option>
-                                            <option value="25000">25,000</option>
-                                            <option value="40000">40,000</option>
+                                            <option value=0 selected>수화물 가격</option>
+                                            <option value=0>0</option>
+                                            <option value=15000>15,000</option>
+                                            <option value=25000>25,000</option>
+                                            <option value=40000>40,000</option>
                                         </select>
                                     </div>
                                 </div>
@@ -253,9 +253,6 @@
                         <div class="row justify-content-center mt-5 mb-5">
                             <div class="col-md-3 px-0 d-flex flex-column align-items-center">
                                 <input type="submit" class="btn btn-outline-success btn-lg my-2" value="입력">
-                                <button class="btn btn-outline-success btn-lg my-2" style="width: 50%;"
-                                        onclick="retrieveTicketProducts()">조회
-                                </button>
                             </div>
                         </div>
                     </div>

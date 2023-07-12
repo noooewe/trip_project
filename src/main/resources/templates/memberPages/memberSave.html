@@ -439,8 +439,8 @@
         const birthDay = document.querySelector("#member-birthDay").value;
         const birthResult = document.querySelector("#birth-result");
 
-        const birthRegex = /^(19[1-9]\d|200[0-8])$/; // 4자리 숫자만 허용하는 정규식
-        const dayRegex = /^(0[1-9]|[12]\d|3[01])$/; // 01부터 31까지의 두 자리 숫자만 허용하는 정규식
+        const birthRegex = /^(19[1-9]\d|200[0-8])$/;
+        const dayRegex = /^(0[1-9]|[12]\d|3[01])$/;
 
         if (!birthYear || !birthMonth || !birthDay) {
             birthResult.innerHTML = "*필수 입력사항입니다.";
@@ -610,8 +610,8 @@
     saveForm.addEventListener('submit', async function (event) {
         const result = await login_check();
         if (!result) {
-            event.preventDefault(); // 폼 제출을 차단하고,
-            alert("필수사항을 입력하지 않았습니다!!"); // 알림을 보냅니다.
+            event.preventDefault();
+            alert("필수사항을 입력하지 않았습니다!!");
         }
     });
 
@@ -623,12 +623,10 @@
         const result1 = confirm("회원가입을 완료하시겠습니까?");
         if (result1) {
             const formData = new FormData(saveForm);
-            // 회원가입 요청
             axios.post('/member/save', formData)
                 .then(function (response) {
                     console.log(response);
                     alert("행복투어의 일원이 되신걸 환영합니다.");
-                    // 페이지를 index("/")로 리다이렉트
                     window.location.href = "/";
                 })
                 .catch(function (error) {

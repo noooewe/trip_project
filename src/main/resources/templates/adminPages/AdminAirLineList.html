@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="component/config :: config"></th:block>
 </head>
 <body>
-
+<div th:replace="component/adminNav :: nav"></div>
+<div id="section">
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>id</th>
+            <th>출발공항</th>
+            <th>도착공항</th>
+            <th>항공기명</th>
+            <th>운항비</th>
+            <th>국내선</th>
+            <th>국제선</th>
+            <th>좌석Class</th>
+            <th>좌석Class 가격</th>
+            <th>기내식</th>
+            <th>기내식 가격</th>
+            <th>수화물</th>
+            <th>수화물 가격</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="airline: ${airLineList}">
+            <td th:text="${airline.id}"></td>
+            <td th:text="${airline.departureAirport}"></td>
+            <td th:text="${airline.arrivalAirport}"></td>
+            <td th:text="${airline.airPlane}"></td>
+            <td th:text="${airline.baseFare}"></td>
+            <td th:text="${airline.operatesDomestic}"></td>
+            <td th:text="${airline.operatesInternational}"></td>
+            <td th:text="${airline.seatPositionClass}"></td>
+            <td th:text="${airline.seatPositionClassPrice}"></td>
+            <td th:text="${airline.airlineMealType}"></td>
+            <td th:text="${airline.airlineMealPrice}"></td>
+            <td th:text="${airline.baggageWeight}"></td>
+            <td th:text="${airline.baggageWeightPrice}"></td>
+            <td>
+                <button class="btn btn-outline-success btn-block" th:onclick="airLine_delete([[${airline.id}]])">삭제
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    const airLine_delete = (id) => {
+        axios({
+            method: "delete",
+            url: "/airline/" + id
+        }).then(res => {
+            alert("삭제완료! 확인을 클릭하면 목록으로 돌아갑니다!");
+            location.href = "/airline/list";
+        }).catch(err => {
+            alert("삭제실패!");
+        });
+    }
+</script>
 </html>

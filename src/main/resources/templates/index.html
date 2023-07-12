@@ -138,16 +138,16 @@
                     <div class="row mb-3">
                         <div class="col-md-2">
                             <label for="departure-date" class="form-label">출발일</label>
-                            <input type="date" id="departure-date" class="form-control" name="departure-date">
+                            <input type="date" id="departure-date" class="form-control" name="departureDate">
                         </div>
                         <div class="col-md-2">
                             <label for="arrival-date" class="form-label">도착일</label>
-                            <input type="date" id="arrival-date" class="form-control" name="arrival-date">
+                            <input type="date" id="arrival-date" class="form-control" name="arrivalDate">
                         </div>
                     </div>
                     <div class="col-md-4 text-center mt-3">
                         <label for="class-select" class="form-label">클래스 선택</label>
-                        <select id="class-select" class="form-select" name="class-select">
+                        <select id="class-select" class="form-select" name="seatPositionClass">
                             <option value="economy">이코노미</option>
                             <option value="business">비즈니스</option>
                             <option value="first">퍼스트 클래스</option>
@@ -164,7 +164,6 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
-
     const swapCities = () => {
         const departureCity = document.getElementById("departure");
         const destinationCity = document.getElementById("destination");
@@ -172,6 +171,38 @@
         departureCity.value = destinationCity.value;
         destinationCity.value = tempCity;
     }
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let departure = document.getElementById("departure").value;
+        let destination = document.getElementById("destination").value;
+        let departureDate = document.getElementById("departure-date").value;
+        let arrivalDate = document.getElementById("arrival-date").value;
+        let seatPositionClass = document.getElementById("class-select").value;
+
+        fetch('/checkFlight', {
+            method: 'POST',
+            body: JSON.stringify({
+                departure: departure,
+                destination: destination,
+                departureDate: departureDate,
+                arrivalDate: arrivalDate,
+                seatPositionClass: seatPositionClass
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("등록되지 않은 운항정보입니다");
+                } else {
+                    location.href = "/nextPage";  //다음 페이지로 이동
+                }
+            });
+    });
 
 </script>
 </html>

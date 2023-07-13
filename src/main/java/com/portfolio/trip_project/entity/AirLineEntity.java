@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -23,6 +24,15 @@ public class AirLineEntity {
 
     @Column(length = 5, nullable = false)
     private String arrivalAirport;
+
+    @Column(length = 5, nullable = false)
+    private LocalTime departureTime;
+
+    @Column(length = 20, nullable = false)
+    private LocalTime arrivalTime;
+
+    @Column(length = 20, nullable = false)
+    private LocalTime flightTime;
 
     @Column(length = 10, nullable = false)
     private String airPlane;
@@ -58,6 +68,9 @@ public class AirLineEntity {
         AirLineEntity airLineEntity = new AirLineEntity();
         airLineEntity.setDepartureAirport(airLineDTO.getDepartureAirport());
         airLineEntity.setArrivalAirport(airLineDTO.getArrivalAirport());
+        airLineEntity.setDepartureTime(airLineEntity.getDepartureTime());
+        airLineEntity.setArrivalTime(airLineEntity.getArrivalTime());
+        airLineEntity.setFlightTime(airLineDTO.getFlightTime());
         airLineEntity.setAirPlane(airLineDTO.getAirPlane());
         airLineEntity.setBaseFare(airLineDTO.getBaseFare());
         airLineEntity.setOperatesDomestic(airLineDTO.getOperatesDomestic());

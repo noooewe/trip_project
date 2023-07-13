@@ -14,6 +14,9 @@
             <th>도착공항</th>
             <th>항공기명</th>
             <th>운항비</th>
+            <th>운항시간</th>
+            <th>출발시간</th>
+            <th>도착시간</th>
             <th>노선여부</th>
             <th>노선여부</th>
             <th>좌석Class</th>
@@ -32,7 +35,10 @@
             <td th:text="${airline.departureAirport}"></td>
             <td th:text="${airline.arrivalAirport}"></td>
             <td th:text="${airline.airPlane}"></td>
-            <td th:text="${airline.baseFare}"></td>
+            <td th:text="${airline.baseFare}">
+            <td th:text="${airline.flightTime}"></td>
+            <td th:text="${airline.arrivalTime}"></td>
+            <td th:text="${airline.flightTime}"></td>
             <td th:text="${airline.operatesDomestic}"></td>
             <td th:text="${airline.operatesInternational}"></td>
             <td th:text="${airline.seatPositionClass}"></td>

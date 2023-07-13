@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @ToString
@@ -13,6 +16,9 @@ public class AirLineDTO {
     private Long id;
     private String departureAirport;     //출발공항
     private String arrivalAirport;       //도착공항
+    private LocalTime departureTime;        //출발시간
+    private LocalTime arrivalTime;          //도착시간
+    private LocalTime flightTime;           //비행시간
     private String airPlane;             //항공기 이름
     private int baseFare;                //기본 요금
     private String operatesDomestic;       //국내 노선 운영 여부
@@ -30,6 +36,9 @@ public class AirLineDTO {
         airLineDTO.setId(airLineEntity.getId());
         airLineDTO.setDepartureAirport(airLineEntity.getDepartureAirport());
         airLineDTO.setArrivalAirport(airLineEntity.getArrivalAirport());
+        airLineDTO.setDepartureTime(airLineEntity.getDepartureTime());
+        airLineDTO.setArrivalTime(airLineEntity.getArrivalTime());
+        airLineDTO.setFlightTime(airLineEntity.getFlightTime());
         airLineDTO.setAirPlane(airLineEntity.getAirPlane());
         airLineDTO.setBaseFare(airLineEntity.getBaseFare());
         airLineDTO.setOperatesDomestic(airLineEntity.getOperatesDomestic());

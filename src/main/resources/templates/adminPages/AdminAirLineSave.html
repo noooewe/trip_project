@@ -140,6 +140,36 @@
                         </div>
                         <div class="card mt-5">
                             <div class="card-body">
+                                <h2 class="card-title text-center">출발시간 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="departureTime" id="departure_Time" placeholder="HH:mm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">운항시간 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="flightTime" id="flight_Time" placeholder="HH:mm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                <h2 class="card-title text-center">도착시간 등록</h2>
+                                <div class="row justify-content-center mt-5 mb-5">
+                                    <div class="col-md-2">
+                                        <input class="form-control" name="arrivalTime" id="arrival_Time" placeholder="HH:mm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-5">
+                            <div class="card-body">
                                 <h2 class="card-title text-center">좌석 클래스 등록</h2>
                                 <div class="row justify-content-center mt-5 mb-5">
                                     <div class="col-md-1 d-flex align-items-center">
@@ -263,4 +293,38 @@
 </div>
 <div th:replace="component/footer :: footer"></div>
 </body>
+<script>
+    document.getElementById('departure_Time').addEventListener('change', calculateArrivalTime);
+    document.getElementById('flight_Time').addEventListener('change', calculateArrivalTime);
+
+    function calculateArrivalTime() {
+        const departureTime = document.getElementById('departure_Time').value;
+        const flightTime = document.getElementById('flight_Time').value;
+
+        if (departureTime && flightTime) {
+            // 출발시간을 시간과 분으로 분리.
+            const [departureHours, departureMinutes] = departureTime.split(':').map(Number);
+
+            // 출발시간 Date 객체를 생성.
+            const departureDate = new Date(1970, 0, 1, departureHours, departureMinutes);
+
+            // 운항시간을 시간과 분으로 분리.
+            const [flightHours, flightMinutes] = flightTime.split(':').map(Number);
+
+            // 운항시간을 밀리초 단위로 변환.
+            const flightMilliseconds = ((flightHours * 60 + flightMinutes) * 60 * 1000);
+
+            // 출발시간에 운항시간을 더함.
+            const arrivalDate = new Date(departureDate.getTime() + flightMilliseconds);
+
+            // 도착시간을 'HH:mm' 형식의 문자열로 변환.
+            const arrivalHours = arrivalDate.getHours().toString().padStart(2, '0');
+            const arrivalMinutes = arrivalDate.getMinutes().toString().padStart(2, '0');
+            const arrivalTime = `${arrivalHours}:${arrivalMinutes}`;
+
+            // 도착시간을 입력 필드에 설정.
+            document.getElementById('arrival_Time').value = arrivalTime;
+        }
+    }
+</script>
 </html>

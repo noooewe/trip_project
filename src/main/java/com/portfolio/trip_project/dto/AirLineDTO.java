@@ -4,6 +4,7 @@ import com.portfolio.trip_project.entity.AirLineEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,8 +17,11 @@ public class AirLineDTO {
     private Long id;
     private String departureAirport;     //출발공항
     private String arrivalAirport;       //도착공항
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime departureTime;        //출발시간
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime arrivalTime;          //도착시간
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime flightTime;           //비행시간
     private String airPlane;             //항공기 이름
     private int baseFare;                //기본 요금

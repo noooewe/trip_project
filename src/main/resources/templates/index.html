@@ -20,8 +20,8 @@
                         <div class="col-md-4 d-flex align-items-center">
                             <div class="d-flex">
                                 <div class="col-md-5">
-                                    <label for="departure" class="form-label">출발지</label>
-                                    <select id="departure" name="departureLocation" class="form-select">
+                                    <label for="departure_airPort" class="form-label">출발지</label>
+                                    <select id="departure_airPort" name="departureAirport" class="form-select">
                                         <optgroup label="Asia">
                                             <option value="ICN">ICN(인천)</option>
                                             <option value="GMP">GMP(김포)</option>
@@ -79,8 +79,8 @@
                                     </button>
                                 </div>
                                 <div class="col-md-5">
-                                    <label for="destination" class="form-label">도착지</label>
-                                    <select id="destination" name="arrivalLocation" class="form-select">
+                                    <label for="arrival_airport" class="form-label">도착지</label>
+                                    <select id="arrival_airport" name="arrivalAirport" class="form-select">
                                         <optgroup label="Asia">
                                             <option value="ICN">ICN(인천)</option>
                                             <option value="GMP">GMP(김포)</option>
@@ -165,8 +165,8 @@
 </body>
 <script>
     const swapCities = () => {
-        const departureCity = document.getElementById("departure");
-        const destinationCity = document.getElementById("destination");
+        const departureCity = document.getElementById("departure_airPort");
+        const destinationCity = document.getElementById("arrival_airport");
         const tempCity = departureCity.value;
         departureCity.value = destinationCity.value;
         destinationCity.value = tempCity;
@@ -175,17 +175,17 @@
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        let departure = document.getElementById("departure").value;
-        let destination = document.getElementById("destination").value;
+        let departure = document.getElementById("departure_airPort").value;
+        let arrival = document.getElementById("arrival_airport").value;
         let departureDate = document.getElementById("departure-date").value;
         let arrivalDate = document.getElementById("arrival-date").value;
         let seatPositionClass = document.getElementById("class-select").value;
 
-        fetch('/checkFlight', {
+        fetch('/flightBooking', {
             method: 'POST',
             body: JSON.stringify({
                 departure: departure,
-                destination: destination,
+                destination: arrival,
                 departureDate: departureDate,
                 arrivalDate: arrivalDate,
                 seatPositionClass: seatPositionClass

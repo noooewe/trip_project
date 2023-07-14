@@ -31,8 +31,8 @@ public class AirLineEntity {
     @Column(nullable = false)
     private LocalTime arrivalTime;
 
-    @Column(nullable = false)
-    private LocalTime flightTime;
+    @Column
+    private int flightTime;
 
     @Column(length = 10, nullable = false)
     private String airPlane;

@@ -294,10 +294,7 @@
 <div th:replace="component/footer :: footer"></div>
 </body>
 <script>
-    document.getElementById('departure_Time').addEventListener('change', calculateArrivalTime);
-    document.getElementById('flight_Time').addEventListener('change', calculateArrivalTime);
-
-    function calculateArrivalTime() {
+    const calculateArrivalTime = () => {
         const departureTime = document.getElementById('departure_Time').value;
         const flightTime = document.getElementById('flight_Time').value;
 
@@ -308,11 +305,11 @@
             // 출발시간 Date 객체를 생성.
             const departureDate = new Date(1970, 0, 1, departureHours, departureMinutes);
 
-            // 운항시간을 시간과 분으로 분리.
-            const [flightHours, flightMinutes] = flightTime.split(':').map(Number);
+            // 운항시간을 분 단위로 변환.
+            const flightMinutesTotal = parseInt(flightTime);
 
             // 운항시간을 밀리초 단위로 변환.
-            const flightMilliseconds = ((flightHours * 60 + flightMinutes) * 60 * 1000);
+            const flightMilliseconds = (flightMinutesTotal * 60 * 1000);
 
             // 출발시간에 운항시간을 더함.
             const arrivalDate = new Date(departureDate.getTime() + flightMilliseconds);
@@ -326,5 +323,24 @@
             document.getElementById('arrival_Time').value = arrivalTime;
         }
     }
+
+    const convertFlightTime = () => {
+        const flightTime = document.getElementById('flight_Time').value;
+
+        // 운항시간을 시간과 분으로 분리.
+        const [flightHours, flightMinutes] = flightTime.split(':').map(Number);
+
+        // 운항시간을 분 단위로 변환.
+        const flightMinutesTotal = (flightHours * 60) + flightMinutes;
+
+        // 변환된 운항시간을 분 단위로 표시.
+        document.getElementById('flight_Time').value = flightMinutesTotal;
+
+        // 운항시간 변환 후 도착시간 계산.
+        calculateArrivalTime();
+    }
+
+    document.getElementById('departure_Time').addEventListener('change', calculateArrivalTime);
+    document.getElementById('flight_Time').addEventListener('change', convertFlightTime);
 </script>
 </html>

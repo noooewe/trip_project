@@ -1,11 +1,15 @@
 package com.portfolio.trip_project.controller;
 
+import com.portfolio.trip_project.dto.AirLineDTO;
 import com.portfolio.trip_project.dto.FlightSearchDTO;
+import com.portfolio.trip_project.service.AirLineService;
 import com.portfolio.trip_project.service.FlightBookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -14,16 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FlightBookingController {
 
     private final FlightBookingService flightBookingService;
+    private final AirLineService airLineService;
 
     @PostMapping("/flightSearch")
-    public String flightSearch(FlightSearchDTO flightSearchDTO, Model model) {
-        boolean isFlightAvailable = flightBookingService.checkAvailability(flightSearchDTO);
-        if (!isFlightAvailable) {
-            model.addAttribute("error", "등록되지 않은 운항정보입니다");
-            return "errorPage"; // 이것은 실제 오류 페이지로 대체되어야 합니다.
+    public ResponseEntity<?> flightSearch(@RequestBody FlightSearchDTO flightSearchDTO) {
+        //사용자 입력 데이터에 해당하는 항공편 검색
+        AirLineDTO airLineDTO = airLineService.searchFlight(flightSearchDTO);
+
+        //해당 항공편이 없는 경우, 적절한 메시지를 보냄
+        if (airLineDTO == null) {
+            return ResponseEntity.badRequest().body("등록되지 않은 운항정보입니다");
         }
-        // put flightSearch object in the session or somewhere to be used in the next page
-        model.addAttribute("flightSearch", flightSearchDTO);
-        return "nextPage"; // 이것은 실제 다음 페이지로 대체되어야 합니다.
+
+        //해당 항공편이 있는 경우, 해당 정보를 포함한 DTO를 리턴
+        return ResponseEntity.ok(flightSearchDTO);
     }
 }

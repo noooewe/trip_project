@@ -6,30 +6,30 @@ import com.portfolio.trip_project.repository.FlightBookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import static com.portfolio.trip_project.entity.FlightBookingEntity.flightBookingToDTO;
 
 @Service
 @RequiredArgsConstructor
 public class FlightBookingService {
 
     private final FlightBookingRepository flightBookingRepository;
+    private FlightSearchDTO flightSearchDTO;
 
-    public boolean checkAvailability(FlightSearchDTO flightSearch) {
-        List<FlightBookingEntity> flightBookingEntityList = flightBookingRepository.findAvailableFlights(
-                flightSearch.getDepartureAirport(),
-                flightSearch.getArrivalAirport(),
-                flightSearch.getDepartureDate(),
-                flightSearch.getArrivalDate(),
-                flightSearch.getSeatPositionClass(),
-                flightSearch.getSeatPositionClassPrice(),
-                flightSearch.getAirlineMealType(),
-                flightSearch.getAirlineMealPrice(),
-                flightSearch.getBaggageWeight(),
-                flightSearch.getBaggageWeightPrice()
+    public boolean checkFlight(FlightSearchDTO flightSearchDTO) {
+        return flightBookingRepository.findByDepartureAirportAndArrivalAirportAndDepartureDateAndArrivalDate(
+                flightSearchDTO.getDepartureAirport(),
+                flightSearchDTO.getArrivalAirport(),
+                flightSearchDTO.getDepartureDate(),
+                flightSearchDTO.getArrivalDate()).isEmpty();
+    }
 
-        );
+    public void tempStoreFlightSearch(FlightSearchDTO flightSearchDTO) {
+        this.flightSearchDTO = flightSearchDTO;
+    }
 
-        return !flightBookingEntityList.isEmpty();
+    public void storeFlightBooking() {
+        FlightBookingEntity flightBookingEntity = flightBookingToDTO(flightSearchDTO);
+        flightBookingRepository.save(flightBookingEntity);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.portfolio.trip_project.entity;
 
+import com.portfolio.trip_project.dto.FlightSearchDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,5 +44,17 @@ public class FlightBookingEntity {
     @Column(length = 10)
     private String addBaggageType; // 추가 수화물 무게 선택
 
-    // getters and setters...
+
+    public static FlightBookingEntity flightBookingToDTO(FlightSearchDTO flightSearchDTO) {
+        FlightBookingEntity flightBookingEntity = new FlightBookingEntity();
+
+        flightBookingEntity.setDepartureDate(flightSearchDTO.getDepartureDate());
+        flightBookingEntity.setArrivalDate(flightSearchDTO.getArrivalDate());
+        flightBookingEntity.setAddMeal(flightSearchDTO.getAddMeal());
+        flightBookingEntity.setAddMealType(flightSearchDTO.getAddMealType());
+        flightBookingEntity.setAddBaggage(flightSearchDTO.getAddBaggage());
+        flightBookingEntity.setAddBaggageType(flightSearchDTO.getAddBaggageType());
+
+        return flightBookingEntity;
+    }
 }

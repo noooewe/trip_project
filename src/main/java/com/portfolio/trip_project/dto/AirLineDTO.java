@@ -56,6 +56,4 @@ public class AirLineDTO {
         return airLineDTO;
     }
 
-
-
 }
